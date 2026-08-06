@@ -12,15 +12,16 @@
   /* Colour */
   --color-primary: #1B4332;         /* Forest Green */
   --color-primary-hover: #143528;
-  --color-on-primary: #F7F8F6;
-  --color-background: #F7F8F6;      /* cool paper, faint green cast */
+  --color-on-primary: #F0EAE1;
+  --color-background: #F0EAE1;      /* Bisque White */
+  --color-surface: #FFFFFF;
   --color-text: #16211C;
   --color-text-muted: #4A574F;
   --color-border: rgba(27, 67, 50, 0.28);
 
   /* Typography */
   --font-display: "Lora", Georgia, "Times New Roman", serif;
-  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Helvetica, Arial, sans-serif;
 
   --text-sm: 0.875rem;
@@ -41,7 +42,22 @@
   --container-gutter: var(--space-lg);
   --measure: 560px;
 
-  --radius: 2px;
+  --radius-sm: 2px;
+  --radius-md: 8px;
+
+  /* Elevation — tinted toward the green ramp, never neutral black */
+  --shadow-sm: 0 1px 3px rgba(22, 33, 28, 0.08);
+  --shadow-md: 0 8px 24px rgba(22, 33, 28, 0.10);
+
+  --transition-fast: 150ms ease;
+
+  /* Navbar — these sit outside the spacing scale on purpose: 20px of vertical
+     padding around a 60px logo is what produces the specified ~100px height. */
+  --nav-padding-y: 20px;
+  --nav-padding-x: 56px;
+  --nav-gap: 40px;
+  --logo-size: 44px;       /* ON mark HEIGHT; width follows its 1.84:1 ratio */
+  --wordmark-size: 28px;   /* wordmark HEIGHT; width follows its 2.94:1 ratio */
 }
 
 /* --------------------------------------------------------------------------
@@ -56,8 +72,20 @@
 
 body,
 h1,
+h2,
 p {
   margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -89,7 +117,79 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   5. Hero
+   5. Header / navigation
+   No borders, no rules — the shadow alone separates nav from content.
+   -------------------------------------------------------------------------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--nav-padding-y) var(--nav-padding-x);
+}
+
+/* Lockup: mark then wordmark, sharing one link to home. */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+/* Both pieces are wider than tall, so height drives the size and width
+   follows. Setting both dimensions would squash them. */
+.logo__mark {
+  height: var(--logo-size);
+  width: auto;
+}
+
+.logo__wordmark {
+  height: var(--wordmark-size);
+  width: auto;
+}
+
+.nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--nav-gap);
+}
+
+.nav__link {
+  display: inline-block;
+  padding-block: var(--space-xs);
+  border-bottom: 1px solid transparent;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);   /* 14px — note: --text-base is 16px */
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  transition: opacity var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.nav__link:hover {
+  opacity: 0.6;
+}
+
+/* Current page: a 1px rule, matched to the link colour */
+.nav__link.active {
+  border-bottom-color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   6. Hero
    -------------------------------------------------------------------------- */
 
 .hero {
@@ -129,7 +229,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   6. Buttons
+   7. Buttons
    -------------------------------------------------------------------------- */
 
 .btn {
@@ -138,7 +238,7 @@ body {
   justify-content: center;
   padding: 0.875rem 1.75rem;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: var(--text-base);
   font-weight: 500;
@@ -173,19 +273,40 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   7. Responsive
+   8. Responsive
    Section rhythm steps down 60px → 40px → 24px.
    -------------------------------------------------------------------------- */
 
 /* Tablet */
 @media (max-width: 768px) {
+  :root {
+    --nav-padding-y: var(--space-md);
+    --nav-padding-x: var(--space-md);
+    --nav-gap: var(--space-lg);
+    --logo-size: 36px;
+    --wordmark-size: 23px;
+  }
+
   .hero {
     padding-block: var(--space-xl);
   }
 }
 
-/* Mobile — CTAs stack and fill the column */
+/* Mobile — nav stacks under the logo, CTAs stack and fill the column */
 @media (max-width: 480px) {
+  /* Too narrow for one row: lockup on top, links wrap beneath it, both
+     left-aligned so they share an edge. */
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .nav__links {
+    justify-content: flex-start;
+    gap: var(--space-md) var(--space-lg);
+  }
+
   .hero {
     padding-block: var(--space-lg);
   }
@@ -202,7 +323,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn {
+  .btn,
+  .nav__link {
     transition: none;
   }
 }
