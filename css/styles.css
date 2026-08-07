@@ -1,11 +1,18 @@
 /* ==========================================================================
    OneName Consulting — global stylesheet
+
+   Mobile first. Base rules are the phone layout; every media query is
+   min-width and only ever adds. Breakpoints:
+     base            up to 480px   phone
+     min-width 481   481 – 768px   tablet
+     min-width 769   769px and up  desktop
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. Design tokens
    The neutral ramp is tinted toward the forest green rather than a flat grey,
-   so background, text and primary all read as one family.
+   so background, text and primary all read as one family. Sizing tokens hold
+   their phone values here and are raised at each breakpoint.
    -------------------------------------------------------------------------- */
 
 :root {
@@ -27,9 +34,9 @@
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
-  --text-display: clamp(2.75rem, 6vw + 0.5rem, 4.5rem);
+  --text-display: clamp(2.25rem, 6vw + 0.5rem, 4.5rem);
 
-  /* Spacing — xl and 2xl double as the tablet/desktop section rhythm */
+  /* Spacing */
   --space-xs: 0.25rem;   /*  4px */
   --space-sm: 0.5rem;    /*  8px */
   --space-md: 1rem;      /* 16px */
@@ -39,7 +46,7 @@
 
   /* Layout */
   --container-max: 1120px;
-  --container-gutter: var(--space-lg);
+  --container-gutter: var(--space-md);
   --measure: 560px;
 
   --radius-sm: 2px;
@@ -51,13 +58,15 @@
 
   --transition-fast: 150ms ease;
 
-  /* Navbar — these sit outside the spacing scale on purpose: 20px of vertical
-     padding around a 60px logo is what produces the specified ~100px height. */
-  --nav-padding-y: 20px;
-  --nav-padding-x: 56px;
-  --nav-gap: 40px;
-  --logo-size: 44px;       /* ON mark HEIGHT; width follows its 1.84:1 ratio */
-  --wordmark-size: 28px;   /* wordmark HEIGHT; width follows its 2.94:1 ratio */
+  /* Navbar — phone values */
+  --nav-padding-y: var(--space-md);
+  --nav-padding-x: var(--space-md);
+  --nav-gap: var(--space-md);
+  --logo-size: 36px;       /* ON mark HEIGHT; width follows its 1.84:1 ratio */
+  --wordmark-size: 23px;   /* wordmark HEIGHT; width follows its 2.94:1 ratio */
+
+  /* Section rhythm — phone value */
+  --section-padding: var(--space-lg);
 }
 
 /* --------------------------------------------------------------------------
@@ -86,6 +95,14 @@ ul {
 img {
   display: block;
   max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -119,6 +136,9 @@ body {
 /* --------------------------------------------------------------------------
    5. Header / navigation
    No borders, no rules — the shadow alone separates nav from content.
+
+   Phone: lockup and hamburger share row one; the menu wraps to row two and
+   is collapsed. Tablet up: one row, menu always open, hamburger gone.
    -------------------------------------------------------------------------- */
 
 .header {
@@ -131,9 +151,10 @@ body {
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   padding: var(--nav-padding-y) var(--nav-padding-x);
 }
 
@@ -157,12 +178,64 @@ body {
   width: auto;
 }
 
+/* Hamburger --------------------------------------------------------------- */
+
+/* Hidden by default so that without JavaScript the menu below simply stays
+   visible and usable. The .js class, set by main.js, turns the collapse on. */
+.nav__toggle {
+  display: none;
+  width: 44px;              /* 44px minimum touch target */
+  height: 44px;
+  margin-right: calc(var(--space-xs) * -1);
+  cursor: pointer;
+}
+
+.js .nav__toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.nav__toggle-bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--color-primary);
+  transition: transform var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+/* Open: top and bottom bars cross, middle bar drops out */
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Menu -------------------------------------------------------------------- */
+
 .nav__links {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: var(--nav-gap);
+  flex-basis: 100%;
+}
+
+/* Collapsed on phones until the hamburger opens it */
+.js .nav__links {
+  display: none;
+}
+
+.js .nav__links--open {
+  display: flex;
 }
 
 .nav__link {
@@ -193,7 +266,7 @@ body {
    -------------------------------------------------------------------------- */
 
 .hero {
-  padding-block: var(--space-2xl);
+  padding-block: var(--section-padding);
 }
 
 .hero__title {
@@ -221,9 +294,11 @@ body {
   text-wrap: pretty;
 }
 
+/* Phones: stacked and full width. Tablet up: side by side. */
 .hero__cta {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-md);
   margin-top: var(--space-xl);
 }
@@ -236,6 +311,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 0.875rem 1.75rem;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
@@ -246,8 +322,8 @@ body {
   letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 150ms ease, border-color 150ms ease,
-    color 150ms ease;
+  transition: background-color var(--transition-fast),
+    border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .btn--primary {
@@ -273,58 +349,67 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. Responsive
-   Section rhythm steps down 60px → 40px → 24px.
+   8. Tablet — 481px and up
    -------------------------------------------------------------------------- */
 
-/* Tablet */
-@media (max-width: 768px) {
+@media (min-width: 481px) {
   :root {
-    --nav-padding-y: var(--space-md);
-    --nav-padding-x: var(--space-md);
+    --container-gutter: var(--space-lg);
     --nav-gap: var(--space-lg);
     --logo-size: 36px;
     --wordmark-size: 23px;
+    --section-padding: var(--space-xl);
   }
 
-  .hero {
-    padding-block: var(--space-xl);
-  }
-}
-
-/* Mobile — nav stacks under the logo, CTAs stack and fill the column */
-@media (max-width: 480px) {
-  /* Too narrow for one row: lockup on top, links wrap beneath it, both
-     left-aligned so they share an edge. */
-  .nav {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-md);
+  /* Full menu, no hamburger */
+  .js .nav__toggle {
+    display: none;
   }
 
-  .nav__links {
-    justify-content: flex-start;
-    gap: var(--space-md) var(--space-lg);
-  }
-
-  .hero {
-    padding-block: var(--space-lg);
+  .nav__links,
+  .js .nav__links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    flex-basis: auto;
   }
 
   .hero__cta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-md);
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   .btn {
-    width: 100%;
+    width: auto;
   }
 }
 
+/* --------------------------------------------------------------------------
+   9. Desktop — 769px and up
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 769px) {
+  :root {
+    --nav-padding-y: 20px;
+    --nav-padding-x: 56px;
+    --nav-gap: 40px;
+    --logo-size: 44px;
+    --wordmark-size: 28px;
+    --section-padding: var(--space-2xl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Reduced motion
+   -------------------------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   .btn,
-  .nav__link {
+  .nav__link,
+  .nav__toggle-bar {
     transition: none;
   }
 }

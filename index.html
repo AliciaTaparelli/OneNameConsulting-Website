@@ -11,6 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Set before first paint so the mobile menu never flashes open. -->
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <header class="header">
@@ -20,7 +23,14 @@
         <img class="logo__wordmark" src="assets/images/onename-wordmark.png" alt="OneName Consulting" width="82" height="28">
       </a>
 
-      <ul class="nav__links">
+      <button class="nav__toggle" type="button" aria-expanded="false"
+              aria-controls="nav-menu" aria-label="Open menu">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__links" id="nav-menu">
         <li><a href="index.html" class="nav__link active" aria-current="page">Home</a></li>
         <li><a href="pages/business-coaching.html" class="nav__link">Business Coaching</a></li>
         <li><a href="pages/consultancy-advisory.html" class="nav__link">Consultancy &amp; Advisory</a></li>
