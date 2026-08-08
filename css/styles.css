@@ -1,6 +1,11 @@
 /* ==========================================================================
    OneName Consulting — global stylesheet
 
+   Art direction: editorial magazine, not corporate web. The page is carried
+   by type, rule-work and whitespace; there are no filled cards, no drop
+   shadows and no radii to speak of. Colour stays the forest/bisque pairing
+   with terracotta used only as punctuation.
+
    Mobile first. Base rules are the phone layout; every media query is
    min-width and only ever adds. Breakpoints:
      base            up to 480px   phone
@@ -27,42 +32,57 @@
   --color-text-secondary: var(--color-text-muted);   /* alias */
   --color-border: rgba(27, 67, 50, 0.28);
 
+  /* The one accent. Punctuation only — a turned word, a hovered rule, an
+     index number. Never body copy, never a background, never meaning-bearing
+     on its own. */
+  --color-accent: #A55232;          /* muted terracotta — 4.56:1 on bisque */
+
+  /* Rule-work does most of the structural work now that cards are gone. */
+  --rule-hairline: rgba(27, 67, 50, 0.18);
+  --rule-strong: rgba(27, 67, 50, 0.42);
+
   /* Typography */
   --font-display: "Lora", Georgia, "Times New Roman", serif;
   --font-body: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Helvetica, Arial, sans-serif;
 
-  --text-xs: 0.75rem;      /* 12px — eyebrows only */
+  --text-xs: 0.75rem;      /* 12px — eyebrows, metadata, buttons */
   --text-sm: 0.875rem;     /* 14px */
   --text-base: 1rem;
   --text-lg: 1.125rem;
-  --text-xl: 1.375rem;     /* 22px — card headings */
-  --text-3xl: clamp(1.625rem, 4vw, 2.125rem);   /* section h2 */
-  --text-5xl: clamp(2rem, 5.5vw, 3rem);         /* page h1, caps at 48px */
-  --text-display: clamp(2.25rem, 6vw + 0.5rem, 4.5rem);
+  --text-xl: clamp(1.25rem, 1.6vw + 0.9rem, 1.625rem);   /* card headings */
+  --text-3xl: clamp(1.875rem, 4.5vw, 3rem);              /* section h2 */
+  --text-5xl: clamp(2.5rem, 7vw, 4.5rem);                /* page h1 */
+  --text-display: clamp(3rem, 11.5vw, 9rem);             /* hero only */
+
+  /* Editorial metadata: small, wide, uppercase. One treatment, used
+     everywhere that isn't display or body. */
+  --tracking-meta: 0.18em;
 
   /* Spacing */
-  --space-xs: 0.25rem;   /*  4px */
-  --space-sm: 0.5rem;    /*  8px */
-  --space-md: 1rem;      /* 16px */
-  --space-lg: 1.5rem;    /* 24px */
-  --space-xl: 2.5rem;    /* 40px */
-  --space-2xl: 3.75rem;  /* 60px */
-  --space-3xl: 5rem;     /* 80px */
+  --space-xs: 0.25rem;   /*   4px */
+  --space-sm: 0.5rem;    /*   8px */
+  --space-md: 1rem;      /*  16px */
+  --space-lg: 1.5rem;    /*  24px */
+  --space-xl: 2.5rem;    /*  40px */
+  --space-2xl: 3.75rem;  /*  60px */
+  --space-3xl: 5rem;     /*  80px */
+  --space-4xl: 7.5rem;   /* 120px — desktop section rhythm */
 
   /* Layout */
   --container-max: 1240px;
   --container-gutter: var(--space-md);
   --measure: 560px;
 
-  --radius-sm: 2px;
-  --radius-md: 8px;
+  --radius-sm: 0;
+  --radius-md: 0;
 
-  /* Elevation — tinted toward the green ramp, never neutral black */
-  --shadow-sm: 0 1px 3px rgba(22, 33, 28, 0.08);
-  --shadow-md: 0 8px 24px rgba(22, 33, 28, 0.10);
+  /* Kept as tokens because components still reference them, but elevation is
+     no longer part of the visual language — both resolve to nothing. */
+  --shadow-sm: none;
+  --shadow-md: none;
 
-  --transition-fast: 150ms ease;
+  --transition-fast: 180ms cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Navbar — phone values */
   --nav-padding-y: var(--space-md);
@@ -72,10 +92,10 @@
   --wordmark-size: 23px;   /* wordmark HEIGHT; width follows its 2.94:1 ratio */
 
   /* Section rhythm — phone values.
-     --section-padding is the landing-page rhythm (24 → 40 → 60);
-     --section-padding-lg is the roomier interior-page rhythm (40 → 60 → 80). */
-  --section-padding: var(--space-lg);
-  --section-padding-lg: var(--space-xl);
+     --section-padding is the landing-page rhythm;
+     --section-padding-lg is the roomier interior-page rhythm. */
+  --section-padding: var(--space-xl);
+  --section-padding-lg: var(--space-2xl);
 }
 
 /* --------------------------------------------------------------------------
@@ -125,6 +145,15 @@ body {
   font-size: var(--text-base);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+
+  /* Composition leans on offsets and oversized type; this is the backstop
+     that guarantees none of it can push the page sideways. */
+  overflow-x: hidden;
+}
+
+/* Sections are numbered by CSS so the markup stays clean. */
+main {
+  counter-reset: section;
 }
 
 :focus-visible {
@@ -144,7 +173,6 @@ body {
 
 /* --------------------------------------------------------------------------
    5. Header / navigation
-   No borders, no rules — the shadow alone separates nav from content.
 
    Phone: lockup and hamburger share row one; the menu wraps to row two and
    is collapsed. Tablet up: one row, menu always open, hamburger gone.
@@ -155,7 +183,7 @@ body {
   top: 0;
   z-index: 100;
   background-color: var(--color-background);
-  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid var(--rule-hairline);
 }
 
 .nav {
@@ -210,7 +238,7 @@ body {
 .nav__toggle-bar {
   display: block;
   width: 22px;
-  height: 1.5px;
+  height: 1px;
   background-color: var(--color-primary);
   transition: transform var(--transition-fast),
     opacity var(--transition-fast);
@@ -218,7 +246,7 @@ body {
 
 /* Open: top and bottom bars cross, middle bar drops out */
 .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
+  transform: translateY(6px) rotate(45deg);
 }
 
 .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(2) {
@@ -226,7 +254,7 @@ body {
 }
 
 .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* Menu -------------------------------------------------------------------- */
@@ -236,6 +264,7 @@ body {
   flex-direction: column;
   gap: var(--nav-gap);
   flex-basis: 100%;
+  padding-bottom: var(--space-sm);
 }
 
 /* Collapsed on phones until the hamburger opens it */
@@ -248,127 +277,535 @@ body {
 }
 
 .nav__link {
+  position: relative;
   display: inline-block;
   padding-block: var(--space-xs);
-  border-bottom: 1px solid transparent;
   color: var(--color-primary);
   font-family: var(--font-body);
-  font-size: var(--text-sm);   /* 14px — note: --text-base is 16px */
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.8px;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
   text-decoration: none;
-  transition: opacity var(--transition-fast),
-    border-color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
-.nav__link:hover {
-  opacity: 0.6;
+/* Rule grows from the left rather than fading in — reads as drawn, not lit. */
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
 }
 
-/* Current page: a 1px rule, matched to the link colour */
-.nav__link.active {
-  border-bottom-color: var(--color-primary);
+.nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Current page: the rule is simply already drawn. Underline, not colour
+   alone, carries the meaning. */
+.nav__link.active::after {
+  transform: scaleX(1);
 }
 
 /* --------------------------------------------------------------------------
    6. Hero
+
+   A magazine cover: the headline runs the full measure at display size, the
+   supporting copy sits low and right of centre, and the actions sit left
+   under it. The imbalance is the composition.
    -------------------------------------------------------------------------- */
 
 .hero {
-  padding-block: var(--section-padding);
+  padding-block: var(--section-padding) var(--space-3xl);
 }
 
 .hero__title {
   font-family: var(--font-display);
   font-size: var(--text-display);
   font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
-/* The one flourish: "craft" set in Lora's italic, so the word demonstrates
-   the craft it names. Delete the <em> in index.html to remove it. */
+/* The one flourish: "craft" set in Lora's italic and turned terracotta, so
+   the word demonstrates the craft it names. Delete the <em> in index.html to
+   remove it. */
 .hero__title em {
   font-style: italic;
   font-weight: 400;
+  color: var(--color-accent);
 }
 
 .hero__description {
   max-width: var(--measure);
-  margin-top: var(--space-lg);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
   font-size: var(--text-lg);
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--color-text-muted);
   text-wrap: pretty;
 }
 
-/* Phones: stacked and full width. Tablet up: side by side. */
 .hero__cta {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-md);
+  align-items: flex-start;
+  gap: var(--space-lg);
   margin-top: var(--space-xl);
 }
 
 /* --------------------------------------------------------------------------
    7. Buttons
+
+   Editorial labels, not UI chrome: small caps, wide tracking, a hairline
+   under them and an arrow that leans on hover. Touch target is held at 44px
+   by padding rather than by box size.
    -------------------------------------------------------------------------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0.875rem 1.75rem;
-  border: 1px solid transparent;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: var(--space-sm) 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
   border-radius: var(--radius-sm);
+  background: none;
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: var(--text-xs);
   font-weight: 500;
+  letter-spacing: var(--tracking-meta);
   line-height: 1.2;
-  letter-spacing: 0.01em;
+  text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color var(--transition-fast),
-    border-color var(--transition-fast), color var(--transition-fast);
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.btn::after {
+  content: "\2197";               /* ↗ */
+  font-size: 1.1em;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+.btn:hover::after {
+  transform: translate(3px, -3px);
 }
 
 .btn--primary {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-on-primary);
-}
-
-.btn--primary:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-}
-
-.btn--secondary {
-  background-color: transparent;
-  border-color: var(--color-border);
   color: var(--color-primary);
 }
 
+.btn--primary:hover {
+  color: var(--color-accent);
+}
+
+.btn--secondary {
+  color: var(--color-text-muted);
+  border-bottom-color: var(--rule-strong);
+}
+
 .btn--secondary:hover {
-  border-color: var(--color-primary);
-  background-color: rgba(27, 67, 50, 0.06);
+  color: var(--color-primary);
 }
 
 /* --------------------------------------------------------------------------
-   8. Tablet — 481px and up
+   8. Shared section furniture
+   -------------------------------------------------------------------------- */
+
+.section {
+  counter-increment: section;
+  padding-block: var(--section-padding-lg);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* Section number as editorial metadata above the heading — 01 —, 02 —.
+   Generated, so the markup carries no decorative spans. */
+.section__title::before {
+  content: counter(section, decimal-leading-zero) " \2014";
+  display: block;
+  margin-bottom: var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.section__intro {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Cards are entries in an index, not objects on a surface: no fill, no
+   radius, no elevation. A rule on top and space below. */
+.card {
+  position: relative;
+  padding: var(--space-lg) 0 var(--space-xl);
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--rule-hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.card:hover,
+.card:focus-within {
+  border-top-color: var(--color-accent);
+  transform: translateY(-3px);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+  text-wrap: balance;
+}
+
+.card__text {
+  margin-top: var(--space-md);
+  max-width: 46ch;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. About — page header
+   -------------------------------------------------------------------------- */
+
+.about-header {
+  padding-block: var(--section-padding-lg) var(--space-3xl);
+}
+
+.about-header__grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.about-header__title {
+  margin-top: var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.about-header__subtitle {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* Portrait slot. Holds its 4:5 shape whether or not an image is in it yet,
+   so dropping the real headshot in later shifts nothing. Art-directed rather
+   than framed: no radius, a hairline, and the image bleeds to the edges. */
+.about-header__portrait {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  aspect-ratio: 4 / 5;
+  max-width: 400px;
+  padding: var(--space-md);
+  border: 1px solid var(--rule-hairline);
+  border-radius: 0;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.about-header__portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  transition: transform var(--transition-fast);
+}
+
+/* A real image removes the placeholder feel entirely; the frame stays. */
+.about-header__portrait:hover img {
+  transform: scale(1.02);
+}
+
+/* --------------------------------------------------------------------------
+   10. About — story
+   -------------------------------------------------------------------------- */
+
+.story__grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+/* Opening paragraph is set larger — a magazine drop-in, without a drop cap. */
+.story__text p:first-of-type {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.story__text p {
+  max-width: 62ch;
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.story__text p + p {
+  margin-top: var(--space-lg);
+}
+
+.story__text .section__title {
+  margin-bottom: var(--space-xl);
+}
+
+.story__aside {
+  display: grid;
+  gap: var(--space-xl);
+  align-content: start;
+}
+
+/* Facts pulled from the narrative — the numbers that make the scope legible
+   at a glance rather than only in prose. */
+.story__fact {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.story__fact-figure {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+}
+
+.story__fact-label {
+  margin-top: var(--space-sm);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   11. Expertise, approach and services
+   -------------------------------------------------------------------------- */
+
+.expertise-grid,
+.services-grid,
+.approach-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+/* An index, not a feature grid: each entry is numbered. */
+.expertise-grid {
+  counter-reset: expertise;
+}
+
+.expertise-card {
+  counter-increment: expertise;
+}
+
+.expertise-card::before {
+  content: counter(expertise, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  line-height: 1;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.expertise-card:hover::before {
+  color: var(--color-accent);
+}
+
+/* Pillars carry a rule rather than a card — they are principles, not offers,
+   and shouldn't compete with the index above them. */
+.approach-pillar {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.approach-pillar__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+}
+
+.approach-pillar__text {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.services-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  color: var(--color-primary);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* The arrow already lives in the markup as → , so the whole label leans
+   forward rather than growing a second one. */
+.services-card__link:hover {
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   12. Credentials
+   -------------------------------------------------------------------------- */
+
+.credentials-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.credentials-group__title {
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.credentials-group__list {
+  margin-top: var(--space-md);
+  display: grid;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.credentials-group__list li {
+  padding-left: var(--space-lg);
+  position: relative;
+}
+
+.credentials-group__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 12px;
+  height: 1px;
+  background-color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   13. CTA
+
+   The last page of the magazine: no filled banner, just a rule, oversized
+   type and air. Green stays as the type colour rather than a background.
+   -------------------------------------------------------------------------- */
+
+.cta-banner {
+  padding-block: var(--space-3xl);
+  border-top: 1px solid var(--rule-strong);
+  background: none;
+  color: var(--color-text);
+}
+
+.cta-banner__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.cta-banner__title {
+  max-width: 12ch;
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-primary);
+  text-wrap: balance;
+}
+
+.cta-banner__text {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   14. Tablet — 481px and up
    -------------------------------------------------------------------------- */
 
 @media (min-width: 481px) {
   :root {
-    --container-gutter: var(--space-lg);
+    --container-gutter: var(--space-xl);
     --nav-gap: var(--space-lg);
-    --logo-size: 36px;
-    --wordmark-size: 23px;
-    --section-padding: var(--space-xl);
-    --section-padding-lg: var(--space-2xl);
+    --section-padding: var(--space-2xl);
+    --section-padding-lg: var(--space-3xl);
   }
 
   /* Full menu, no hamburger */
@@ -384,410 +821,187 @@ body {
     align-items: center;
     justify-content: flex-end;
     flex-basis: auto;
+    padding-bottom: 0;
   }
 
   .hero__cta {
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-  }
-
-  .btn {
-    width: auto;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   9. Desktop — 769px and up
-   -------------------------------------------------------------------------- */
-
-@media (min-width: 769px) {
-  :root {
-    --nav-padding-y: 20px;
-    --nav-padding-x: 56px;
-    --nav-gap: 40px;
-    --logo-size: 44px;
-    --wordmark-size: 28px;
-    --section-padding: var(--space-2xl);
-    --section-padding-lg: var(--space-3xl);
-  }
-}
-
-/* --------------------------------------------------------------------------
-   10. Shared section furniture
-   -------------------------------------------------------------------------- */
-
-.section {
-  padding-block: var(--section-padding-lg);
-}
-
-.section__title {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-}
-
-.section__intro {
-  max-width: var(--measure);
-  margin-top: var(--space-md);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-}
-
-.eyebrow {
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-}
-
-/* Shared card shell — expertise and services both sit on it */
-.card {
-  padding: var(--space-lg);
-  background-color: var(--color-surface);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-fast);
-}
-
-.card:hover,
-.card:focus-within {
-  box-shadow: var(--shadow-md);
-}
-
-.card__title {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--color-primary);
-}
-
-.card__text {
-  margin-top: var(--space-sm);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text);
-}
-
-/* --------------------------------------------------------------------------
-   11. About — page header
-   -------------------------------------------------------------------------- */
-
-.about-header {
-  padding-block: var(--section-padding-lg);
-}
-
-.about-header__grid {
-  display: grid;
-  gap: var(--space-xl);
-}
-
-.about-header__title {
-  margin-top: var(--space-sm);
-  font-family: var(--font-display);
-  font-size: var(--text-5xl);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-
-.about-header__subtitle {
-  max-width: var(--measure);
-  margin-top: var(--space-lg);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text);
-}
-
-/* Portrait slot. Holds its 4:5 shape whether or not an image is in it yet,
-   so dropping the real headshot in later shifts nothing. */
-.about-header__portrait {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 4 / 5;
-  max-width: 400px;
-  margin-inline: auto;
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-md);
-  background-color: rgba(27, 67, 50, 0.04);
-  color: var(--color-text-secondary);
-  font-size: var(--text-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.about-header__portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-}
-
-/* --------------------------------------------------------------------------
-   12. About — story
-   -------------------------------------------------------------------------- */
-
-.story__grid {
-  display: grid;
-  gap: var(--space-xl);
-}
-
-.story__text p {
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text);
-}
-
-.story__text p + p {
-  margin-top: var(--space-lg);
-}
-
-.story__aside {
-  display: grid;
-  gap: var(--space-lg);
-  align-content: start;
-}
-
-/* Facts pulled from the narrative — the numbers that make the scope legible
-   at a glance rather than only in prose. */
-.story__fact {
-  padding-left: var(--space-md);
-  border-left: 2px solid var(--color-primary);
-}
-
-.story__fact-figure {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: 1.1;
-  color: var(--color-primary);
-}
-
-.story__fact-label {
-  margin-top: var(--space-xs);
-  font-size: var(--text-xs);
-  line-height: 1.5;
-  color: var(--color-text-secondary);
-}
-
-/* --------------------------------------------------------------------------
-   13. About — expertise, approach, services grids
-   -------------------------------------------------------------------------- */
-
-.expertise-grid,
-.services-grid,
-.approach-grid {
-  display: grid;
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-/* Pillars carry a rule rather than a card — they are principles, not offers,
-   and shouldn't compete visually with the expertise cards above them. */
-.approach-pillar {
-  padding-top: var(--space-md);
-  border-top: 2px solid var(--color-primary);
-}
-
-.approach-pillar__title {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--color-primary);
-}
-
-.approach-pillar__text {
-  margin-top: var(--space-sm);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: var(--color-text);
-}
-
-.services-card__link {
-  display: inline-block;
-  margin-top: var(--space-md);
-  color: var(--color-primary);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition-fast);
-}
-
-.services-card__link:hover {
-  border-bottom-color: var(--color-primary);
-}
-
-/* --------------------------------------------------------------------------
-   14. About — credentials
-   -------------------------------------------------------------------------- */
-
-.credentials-grid {
-  display: grid;
-  gap: var(--space-xl);
-  margin-top: var(--space-xl);
-}
-
-.credentials-group__title {
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.credentials-group__list {
-  margin-top: var(--space-md);
-  display: grid;
-  gap: var(--space-sm);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-}
-
-.credentials-group__list li {
-  padding-left: var(--space-md);
-  position: relative;
-}
-
-.credentials-group__list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 6px;
-  height: 1px;
-  background-color: var(--color-primary);
-}
-
-/* --------------------------------------------------------------------------
-   15. About — CTA banner
-   -------------------------------------------------------------------------- */
-
-.cta-banner {
-  padding-block: var(--space-2xl);
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
-}
-
-.cta-banner__inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-
-.cta-banner__title {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: 500;
-  line-height: 1.15;
-  color: var(--color-on-primary);
-  text-wrap: balance;
-}
-
-.cta-banner__text {
-  max-width: var(--measure);
-  margin-top: var(--space-sm);
-  font-size: var(--text-sm);
-  line-height: 1.6;
-  color: rgba(240, 234, 225, 0.82);
-}
-
-/* A green button on a green banner would disappear, so the primary button
-   inverts here. The markup keeps .btn--primary as specified. */
-.cta-banner .btn--primary {
-  background-color: var(--color-on-primary);
-  border-color: var(--color-on-primary);
-  color: var(--color-primary);
-}
-
-.cta-banner .btn--primary:hover {
-  background-color: #FFFFFF;
-  border-color: #FFFFFF;
-}
-
-.cta-banner :focus-visible {
-  outline-color: var(--color-on-primary);
-}
-
-/* --------------------------------------------------------------------------
-   16. About — tablet, 481px and up
-   -------------------------------------------------------------------------- */
-
-@media (min-width: 481px) {
-  .card {
-    padding: var(--space-xl);
+    gap: var(--space-2xl);
   }
 
   .expertise-grid,
   .services-grid,
   .approach-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-2xl);
   }
 
-  .cta-banner__actions {
-    flex-shrink: 0;
+  .credentials-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 /* --------------------------------------------------------------------------
-   17. About — desktop, 769px and up
+   15. Desktop — 769px and up
+
+   Where the asymmetry lives. Columns are deliberately unequal and a few
+   elements are stepped down the page; everything stays inside the grid, so
+   nothing can overflow.
    -------------------------------------------------------------------------- */
 
 @media (min-width: 769px) {
-  .about-header__grid {
-    grid-template-columns: 1.4fr 1fr;
-    align-items: center;
-    gap: var(--space-2xl);
+  :root {
+    --container-gutter: var(--space-2xl);
+    --nav-padding-y: 20px;
+    --nav-padding-x: var(--space-2xl);
+    --nav-gap: var(--space-xl);
+    --logo-size: 44px;
+    --wordmark-size: 28px;
+    --section-padding: var(--space-3xl);
+    --section-padding-lg: var(--space-4xl);
   }
 
-  /* 60 / 40 split, 48px gutter */
+  /* Hero ------------------------------------------------------------------ */
+
+  .hero {
+    padding-block: var(--space-3xl) var(--space-4xl);
+  }
+
+  .hero .container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-xl);
+  }
+
+  /* Optical alignment: the L of the headline hangs a hair left of the rules
+     below it so the left edge reads straight. */
+  .hero__title {
+    grid-column: 1 / -1;
+    margin-left: -0.04em;
+  }
+
+  /* Copy sits low and right of centre; actions sit left beneath it. The
+     diagonal between them is the composition. */
+  .hero__description {
+    grid-column: 7 / 12;
+    margin-top: var(--space-2xl);
+  }
+
+  .hero__cta {
+    grid-column: 1 / 6;
+    grid-row: 2;
+    align-self: end;
+    margin-top: var(--space-2xl);
+  }
+
+  /* About header ---------------------------------------------------------- */
+
+  .about-header__grid {
+    grid-template-columns: 1.45fr 0.9fr;
+    align-items: end;
+    column-gap: var(--space-3xl);
+  }
+
+  /* Portrait drops below the baseline of the type beside it. */
+  .about-header__portrait {
+    margin-bottom: calc(var(--space-xl) * -1);
+  }
+
+  /* Story ----------------------------------------------------------------- */
+
   .story__grid {
     grid-template-columns: 3fr 2fr;
-    gap: 3rem;
+    column-gap: var(--space-3xl);
   }
+
+  /* Facts start well down the column, level with the second paragraph. */
+  .story__aside {
+    margin-top: var(--space-4xl);
+  }
+
+  /* Index and grids ------------------------------------------------------- */
 
   .expertise-grid,
   .services-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.15fr 1fr 0.85fr;
+    column-gap: var(--space-3xl);
+  }
+
+  /* Stepped columns. Applied by column position so all six entries in the
+     expertise index step consistently rather than at random. */
+  .expertise-card:nth-child(3n + 2),
+  .services-card:nth-child(3n + 2) {
+    margin-top: var(--space-xl);
+  }
+
+  .expertise-card:nth-child(3n),
+  .services-card:nth-child(3n) {
+    margin-top: var(--space-3xl);
   }
 
   .approach-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--space-xl);
+  }
+
+  .approach-pillar:nth-child(even) {
+    margin-top: var(--space-xl);
   }
 
   .credentials-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1.1fr 0.8fr 1.2fr;
+    column-gap: var(--space-3xl);
   }
 
+  /* CTA ------------------------------------------------------------------- */
+
   .cta-banner {
-    padding-block: var(--space-2xl);
+    padding-block: var(--space-4xl);
   }
 
   .cta-banner__inner {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: var(--space-2xl);
+    gap: var(--space-3xl);
+  }
+
+  .cta-banner__actions {
+    flex-shrink: 0;
+    padding-bottom: var(--space-sm);
   }
 }
 
 /* --------------------------------------------------------------------------
-   18. Reduced motion
+   16. Reduced motion
+   Movement is decoration here, never information — so it all goes.
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   .btn,
+  .btn::after,
   .nav__link,
+  .nav__link::after,
   .nav__toggle-bar,
   .card,
-  .services-card__link {
+  .expertise-card::before,
+  .services-card__link,
+  .about-header__portrait img {
     transition: none;
+  }
+
+  .btn:hover::after,
+  .card:hover,
+  .card:focus-within,
+  .services-card__link:hover,
+  .about-header__portrait:hover img {
+    transform: none;
+  }
+
+  /* The active-page rule must still be drawn without a transition. */
+  .nav__link.active::after {
+    transform: scaleX(1);
   }
 }
