@@ -99,9 +99,12 @@
 
   /* Pattern accents. Opacity and height are the two things worth tweaking,
      so they live here rather than in the rules below. */
-  --pattern-opacity: 0.18;          /* hero accent */
-  --pattern-opacity-section: 0.20;  /* section accent */
-  --pattern-accent-h: 120px;        /* hero band height, phone and tablet */
+  /* The hero field is meant to be noticed on second glance, not first.
+     Phones get the faintest setting so nothing competes with the headline.
+     Measured at 0.09: muted copy holds 5.46:1 and the terracotta em 3.92:1
+     over the densest dots, so type sits on it cleanly. */
+  --pattern-opacity: 0.04;          /* hero field — phone */
+  --pattern-opacity-section: 0.12;  /* section accent */
   --pattern-divider-h: 56px;        /* full-opacity closing band */
 }
 
@@ -357,12 +360,15 @@ main {
   pointer-events: none;
 }
 
-/* Phone and tablet: a band across the top of the hero. */
+/* A field behind the whole hero rather than a shape beside it. The radial
+   mask concentrates it in the top-right corner and lets it fall away to
+   nothing across the rest, so the bisque stays clean where the type sits. */
 .pattern-accent--hero {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--pattern-accent-h);
+  inset: 0;
+  -webkit-mask-image: radial-gradient(115% 95% at 100% 0%,
+    #000 0%, rgba(0, 0, 0, 0.5) 40%, transparent 74%);
+  mask-image: radial-gradient(115% 95% at 100% 0%,
+    #000 0%, rgba(0, 0, 0, 0.5) 40%, transparent 74%);
 }
 
 /* Beside the approach heading, which is capped at --measure and sits left.
@@ -385,9 +391,7 @@ main {
 .hero {
   position: relative;
   overflow: hidden;
-  /* Derived from the band, so the headline can never reach it. */
-  padding-block: calc(var(--pattern-accent-h) + var(--space-xl))
-    var(--space-3xl);
+  padding-block: var(--section-padding) var(--space-3xl);
 }
 
 .hero > .container {
@@ -875,7 +879,7 @@ main {
     --nav-gap: var(--space-lg);
     --section-padding: var(--space-2xl);
     --section-padding-lg: var(--space-3xl);
-    --pattern-accent-h: 160px;
+    --pattern-opacity: 0.07;
     --pattern-divider-h: 72px;
   }
 
@@ -951,15 +955,8 @@ main {
     --wordmark-size: 28px;
     --section-padding: var(--space-3xl);
     --section-padding-lg: var(--space-4xl);
+    --pattern-opacity: 0.09;
     --pattern-divider-h: 88px;
-  }
-
-  /* The accent takes the right third of the hero for its full height. */
-  .pattern-accent--hero {
-    left: auto;
-    right: 0;
-    width: 34%;
-    height: 100%;
   }
 
   .pattern-accent--section {
@@ -983,14 +980,14 @@ main {
   /* Optical alignment: the L of the headline hangs a hair left of the rules
      below it so the left edge reads straight. */
   .hero__title {
-    grid-column: 1 / 8;
+    grid-column: 1 / -1;
     margin-left: -0.04em;
   }
 
   /* Copy sits low and right of centre; actions sit left beneath it. The
      diagonal between them is the composition. */
   .hero__description {
-    grid-column: 2 / 8;
+    grid-column: 7 / 12;
     margin-top: var(--space-2xl);
   }
 
