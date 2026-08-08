@@ -345,6 +345,10 @@ main {
    frame and the columns below stop short of it. Either way the two cannot
    meet, at any viewport width.
 
+   The artwork is the client's own file with its paper keyed out, so the site's
+   bisque shows through rather than the artwork's slightly cooler #F3F1EF. Ink
+   is the artwork's measured #0D3720, untouched.
+
    Paths are relative to this stylesheet, so they resolve identically from the
    root page and from pages/.
    -------------------------------------------------------------------------- */
@@ -352,7 +356,7 @@ main {
 .pattern-accent {
   position: absolute;
   z-index: 0;
-  background-image: url("../assets/images/pattern.svg");
+  background-image: url("../assets/images/pattern.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -382,9 +386,9 @@ main {
    has no sliced curves. Full opacity — this one is the accent, not a wash. */
 .pattern-divider {
   height: var(--pattern-divider-h);
-  background-image: url("../assets/images/pattern-band.svg");
+  background-image: url("../assets/images/pattern.webp");
   background-size: cover;
-  background-position: center;
+  background-position: center 42%;
   background-repeat: no-repeat;
 }
 
