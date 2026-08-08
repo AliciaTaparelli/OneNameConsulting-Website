@@ -96,6 +96,13 @@
      --section-padding-lg is the roomier interior-page rhythm. */
   --section-padding: var(--space-xl);
   --section-padding-lg: var(--space-2xl);
+
+  /* Pattern accents. Opacity and height are the two things worth tweaking,
+     so they live here rather than in the rules below. */
+  --pattern-opacity: 0.18;          /* hero accent */
+  --pattern-opacity-section: 0.20;  /* section accent */
+  --pattern-accent-h: 120px;        /* hero band height, phone and tablet */
+  --pattern-divider-h: 56px;        /* full-opacity closing band */
 }
 
 /* --------------------------------------------------------------------------
@@ -322,8 +329,70 @@ main {
    under it. The imbalance is the composition.
    -------------------------------------------------------------------------- */
 
+/* --------------------------------------------------------------------------
+   Pattern accents
+
+   Three placements, no more: a faded field in the hero, a faded field beside
+   the approach heading, and a full-opacity band closing the About page.
+
+   The governing rule is that type never sits on the pattern. That isn't left
+   to opacity — it is built into the geometry. On phone and tablet the hero
+   accent is a band and the hero's top padding is derived from its height, so
+   the headline starts below it. On desktop the accent takes the right of the
+   frame and the columns below stop short of it. Either way the two cannot
+   meet, at any viewport width.
+
+   Paths are relative to this stylesheet, so they resolve identically from the
+   root page and from pages/.
+   -------------------------------------------------------------------------- */
+
+.pattern-accent {
+  position: absolute;
+  z-index: 0;
+  background-image: url("../assets/images/pattern.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: var(--pattern-opacity);
+  pointer-events: none;
+}
+
+/* Phone and tablet: a band across the top of the hero. */
+.pattern-accent--hero {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--pattern-accent-h);
+}
+
+/* Beside the approach heading, which is capped at --measure and sits left.
+   Hidden on phones, where there is no clear space to put it. */
+.pattern-accent--section {
+  display: none;
+  opacity: var(--pattern-opacity-section);
+}
+
+/* Drawn short rather than cropped from the full field, so the closing band
+   has no sliced curves. Full opacity — this one is the accent, not a wash. */
+.pattern-divider {
+  height: var(--pattern-divider-h);
+  background-image: url("../assets/images/pattern-band.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .hero {
-  padding-block: var(--section-padding) var(--space-3xl);
+  position: relative;
+  overflow: hidden;
+  /* Derived from the band, so the headline can never reach it. */
+  padding-block: calc(var(--pattern-accent-h) + var(--space-xl))
+    var(--space-3xl);
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .hero__title {
@@ -806,6 +875,27 @@ main {
     --nav-gap: var(--space-lg);
     --section-padding: var(--space-2xl);
     --section-padding-lg: var(--space-3xl);
+    --pattern-accent-h: 160px;
+    --pattern-divider-h: 72px;
+  }
+
+  /* Space opens up beside the heading, so the section accent can appear. */
+  .approach-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .approach-section > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pattern-accent--section {
+    display: block;
+    top: 0;
+    right: 0;
+    width: 42%;
+    height: 280px;
   }
 
   /* Full menu, no hamburger */
@@ -861,10 +951,25 @@ main {
     --wordmark-size: 28px;
     --section-padding: var(--space-3xl);
     --section-padding-lg: var(--space-4xl);
+    --pattern-divider-h: 88px;
+  }
+
+  /* The accent takes the right third of the hero for its full height. */
+  .pattern-accent--hero {
+    left: auto;
+    right: 0;
+    width: 34%;
+    height: 100%;
+  }
+
+  .pattern-accent--section {
+    width: 38%;
+    height: 340px;
   }
 
   /* Hero ------------------------------------------------------------------ */
 
+  /* No band overhead now, so the hero reverts to its own rhythm. */
   .hero {
     padding-block: var(--space-3xl) var(--space-4xl);
   }
@@ -878,14 +983,14 @@ main {
   /* Optical alignment: the L of the headline hangs a hair left of the rules
      below it so the left edge reads straight. */
   .hero__title {
-    grid-column: 1 / -1;
+    grid-column: 1 / 8;
     margin-left: -0.04em;
   }
 
   /* Copy sits low and right of centre; actions sit left beneath it. The
      diagonal between them is the composition. */
   .hero__description {
-    grid-column: 7 / 12;
+    grid-column: 2 / 8;
     margin-top: var(--space-2xl);
   }
 
