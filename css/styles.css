@@ -874,6 +874,78 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13b. Footer
+
+   The pattern band is the closing flourish and lives here rather than being
+   repeated per page, so every page ends the same way.
+   -------------------------------------------------------------------------- */
+
+.footer {
+  margin-top: var(--section-padding-lg);
+}
+
+.footer__inner {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block: var(--space-2xl);
+}
+
+.footer__wordmark {
+  height: 26px;
+  width: auto;
+}
+
+.footer__tagline {
+  max-width: 34ch;
+  margin-top: var(--space-md);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.footer__list {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.footer__link {
+  position: relative;
+  display: inline-block;
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+/* Same drawn rule as the navigation, so the two read as one system. */
+.footer__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
+}
+
+.footer__link:hover::after {
+  transform: scaleX(1);
+}
+
+.footer__legal {
+  grid-column: 1 / -1;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--rule-hairline);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
    14. Tablet — 481px and up
    -------------------------------------------------------------------------- */
 
@@ -938,6 +1010,11 @@ main {
 
   .credentials-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-2xl);
   }
 }
 
@@ -1078,6 +1155,12 @@ main {
     flex-shrink: 0;
     padding-bottom: var(--space-sm);
   }
+
+  /* Brand block takes the wider column; the two link lists sit beside it. */
+  .footer__inner {
+    grid-template-columns: 1.6fr 1fr 1fr;
+    column-gap: var(--space-3xl);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1090,6 +1173,8 @@ main {
   .btn::after,
   .nav__link,
   .nav__link::after,
+  .footer__link,
+  .footer__link::after,
   .nav__toggle-bar,
   .card,
   .expertise-card::before,
