@@ -97,10 +97,9 @@
   --section-padding: var(--space-xl);
   --section-padding-lg: var(--space-2xl);
 
-  /* Size of the artwork and how strongly it prints. 0.5 keeps the headline
-     (#16211C) at 5.33:1 over the densest dots — clear of AA. */
-  --pattern-height: 280px;
-  --pattern-opacity: 0.5;
+  /* Height of a pattern crop. Hero padding is derived from it, so raising
+     this at a breakpoint moves the artwork and the type together. */
+  --pattern-band: 88px;
 }
 
 /* --------------------------------------------------------------------------
@@ -322,70 +321,84 @@ main {
 /* --------------------------------------------------------------------------
    5b. The pattern
 
-   One artwork, shown whole. Every instance uses object-fit: contain, so the
-   curves are never sliced — the artwork keeps its own silhouette and the
-   composition comes from where it sits, not from where it is cut.
+   One artwork, three crops: a pair of bands framing the hero, a narrow strip
+   mid-page, and a turned crop closing the About page. It is always an <img>
+   rather than a background so the crop is controllable and the element can
+   drift independently of its frame.
 
-   Legibility rule, measured rather than guessed: over the densest part of the
-   pattern only large dark type clears WCAG. Muted body copy (3.7:1) and the
-   terracotta accent (2.7:1) do not, at any opacity worth using. So the
-   headline is allowed to overlap the artwork; small copy never is, and the
-   grid below keeps it in cleared columns.
+   The rule the composition depends on: the artwork frames the type, it never
+   sits behind it. Every crop is a band at an edge; the middle stays empty.
    -------------------------------------------------------------------------- */
 
 .hero__pattern,
 .pattern-strip,
 .cta-banner__pattern {
   position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  opacity: var(--pattern-opacity);
 }
 
+/* The image is deliberately larger than its frame, and the overflow is split
+   evenly above and below it (-16% top on a 132% height). That symmetry is the
+   drift budget: the largest data-drift in use is 0.14, so movement in either
+   direction stays inside 16% and no edge is ever exposed. */
 .hero__pattern img,
 .pattern-strip img,
 .cta-banner__pattern img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: -16%;
+  left: -8%;
+  width: 116%;
+  height: 132%;
   max-width: none;
-  object-fit: contain;      /* whole artwork, never cropped */
+  object-fit: cover;
   will-change: transform;
 }
 
-/* Hero: anchored top-right. The headline runs underneath it. */
 .hero__pattern {
+  height: var(--pattern-band);
+}
+
+.hero__pattern--top {
   top: 0;
-  right: 0;
-  width: 100%;
-  height: var(--pattern-height);
 }
 
-.hero__pattern img {
-  object-position: right top;
+.hero__pattern--top img {
+  object-position: center top;
 }
 
-/* Mid-page: the artwork whole at small scale, centred and full-bleed. */
+.hero__pattern--bottom {
+  bottom: 0;
+}
+
+/* Turned on both axes, so the closing band is recognisably the same artwork
+   without repeating the same crop. */
+.hero__pattern--bottom img {
+  object-position: center bottom;
+  scale: -1 -1;
+}
+
+/* Mid-page: full-bleed, narrower than the hero bands. */
 .pattern-strip {
   position: relative;
-  height: calc(var(--pattern-height) * 0.62);
+  height: calc(var(--pattern-band) * 0.8);
   margin-block: var(--space-2xl);
 }
 
 .pattern-strip img {
-  object-position: center;
+  object-position: center 40%;
 }
 
-/* Closing crop: turned horizontally so it reads as the same artwork seen
-   from the other side. */
 .cta-banner__pattern {
-  right: 0;
   bottom: 0;
-  width: 100%;
-  height: calc(var(--pattern-height) * 0.72);
+  height: var(--pattern-band);
 }
 
 .cta-banner__pattern img {
-  object-position: right bottom;
+  object-position: center 65%;
   scale: -1 1;
 }
 
@@ -397,15 +410,15 @@ main {
    under it. The imbalance is the composition.
    -------------------------------------------------------------------------- */
 
-/* The artwork sits top-right and the headline runs across it. Top padding is
-   a fraction of the artwork height so the headline lands over its lower half,
-   where the curves open out, rather than under its densest corner. */
+/* The bands sit at top and bottom; the content sits in the clear middle.
+   Padding is derived from the band height so the type can never collide with
+   the artwork, at any breakpoint. */
 .hero {
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding-block: calc(var(--pattern-height) * 0.62) var(--space-3xl);
+  padding-block: calc(var(--pattern-band) + var(--space-xl));
 }
 
 .hero > .container {
@@ -423,14 +436,13 @@ main {
   text-wrap: balance;
 }
 
-/* The one flourish: "craft" set in Lora's italic, so the word demonstrates
-   the craft it names. It stays the headline colour rather than terracotta —
-   the accent measures 2.7:1 over the densest dots, and the headline is the
-   one element allowed to overlap the artwork. Delete the <em> in index.html
-   to remove it. */
+/* The one flourish: "craft" set in Lora's italic and turned terracotta, so
+   the word demonstrates the craft it names. Delete the <em> in index.html to
+   remove it. */
 .hero__title em {
   font-style: italic;
   font-weight: 400;
+  color: var(--color-accent);
 }
 
 .hero__description {
@@ -856,7 +868,7 @@ main {
 .cta-banner {
   position: relative;
   overflow: hidden;
-  padding-block: var(--space-3xl) calc(var(--pattern-height) * 0.72 + var(--space-2xl));
+  padding-block: var(--space-3xl) calc(var(--pattern-band) + var(--space-2xl));
   border-top: 1px solid var(--rule-strong);
   background: none;
   color: var(--color-text);
@@ -900,7 +912,7 @@ main {
     --nav-gap: var(--space-lg);
     --section-padding: var(--space-2xl);
     --section-padding-lg: var(--space-3xl);
-    --pattern-height: 400px;
+    --pattern-band: 132px;
   }
 
   /* Full menu, no hamburger */
@@ -956,22 +968,16 @@ main {
     --wordmark-size: 28px;
     --section-padding: var(--space-3xl);
     --section-padding-lg: var(--space-4xl);
-    --pattern-height: 620px;
+    --pattern-band: 200px;
   }
 
   /* Hero ------------------------------------------------------------------ */
 
-  /* Tall enough to give the artwork room to be seen whole. */
+  /* Tall enough that the cleared middle reads as deliberate space rather
+     than as a gap between two bands. */
   .hero {
-    min-height: clamp(620px, 88vh, 940px);
-    padding-block: var(--space-3xl);
-  }
-
-  /* The artwork takes the right of the frame and the full height, so its
-     curves read at scale. The headline crosses it; the copy below does not. */
-  .hero__pattern {
-    width: 62%;
-    height: 100%;
+    min-height: clamp(600px, 86vh, 920px);
+    padding-block: calc(var(--pattern-band) + var(--space-2xl));
   }
 
   .hero .container {
@@ -987,10 +993,10 @@ main {
     margin-left: -0.04em;
   }
 
-  /* Copy and actions both sit in the cleared left columns, under the
-     headline. The artwork holds the right. */
+  /* Copy sits low and right of centre; actions sit left beneath it. The
+     diagonal between them is the composition. */
   .hero__description {
-    grid-column: 1 / 7;
+    grid-column: 7 / 12;
     margin-top: var(--space-2xl);
   }
 
