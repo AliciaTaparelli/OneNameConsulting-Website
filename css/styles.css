@@ -96,6 +96,10 @@
      --section-padding-lg is the roomier interior-page rhythm. */
   --section-padding: var(--space-xl);
   --section-padding-lg: var(--space-2xl);
+
+  /* Height of a pattern crop. Hero padding is derived from it, so raising
+     this at a breakpoint moves the artwork and the type together. */
+  --pattern-band: 88px;
 }
 
 /* --------------------------------------------------------------------------
@@ -315,6 +319,90 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   5b. The pattern
+
+   One artwork, three crops: a pair of bands framing the hero, a narrow strip
+   mid-page, and a turned crop closing the About page. It is always an <img>
+   rather than a background so the crop is controllable and the element can
+   drift independently of its frame.
+
+   The rule the composition depends on: the artwork frames the type, it never
+   sits behind it. Every crop is a band at an edge; the middle stays empty.
+   -------------------------------------------------------------------------- */
+
+.hero__pattern,
+.pattern-strip,
+.cta-banner__pattern {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* The image is deliberately larger than its frame, and the overflow is split
+   evenly above and below it (-16% top on a 132% height). That symmetry is the
+   drift budget: the largest data-drift in use is 0.14, so movement in either
+   direction stays inside 16% and no edge is ever exposed. */
+.hero__pattern img,
+.pattern-strip img,
+.cta-banner__pattern img {
+  position: absolute;
+  top: -16%;
+  left: -8%;
+  width: 116%;
+  height: 132%;
+  max-width: none;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.hero__pattern {
+  height: var(--pattern-band);
+}
+
+.hero__pattern--top {
+  top: 0;
+}
+
+.hero__pattern--top img {
+  object-position: center top;
+}
+
+.hero__pattern--bottom {
+  bottom: 0;
+}
+
+/* Turned on both axes, so the closing band is recognisably the same artwork
+   without repeating the same crop. */
+.hero__pattern--bottom img {
+  object-position: center bottom;
+  scale: -1 -1;
+}
+
+/* Mid-page: full-bleed, narrower than the hero bands. */
+.pattern-strip {
+  position: relative;
+  height: calc(var(--pattern-band) * 0.8);
+  margin-block: var(--space-2xl);
+}
+
+.pattern-strip img {
+  object-position: center 40%;
+}
+
+.cta-banner__pattern {
+  bottom: 0;
+  height: var(--pattern-band);
+}
+
+.cta-banner__pattern img {
+  object-position: center 65%;
+  scale: -1 1;
+}
+
+/* --------------------------------------------------------------------------
    6. Hero
 
    A magazine cover: the headline runs the full measure at display size, the
@@ -322,8 +410,21 @@ main {
    under it. The imbalance is the composition.
    -------------------------------------------------------------------------- */
 
+/* The bands sit at top and bottom; the content sits in the clear middle.
+   Padding is derived from the band height so the type can never collide with
+   the artwork, at any breakpoint. */
 .hero {
-  padding-block: var(--section-padding) var(--space-3xl);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-block: calc(var(--pattern-band) + var(--space-xl));
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
 .hero__title {
@@ -765,13 +866,18 @@ main {
    -------------------------------------------------------------------------- */
 
 .cta-banner {
-  padding-block: var(--space-3xl);
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-3xl) calc(var(--pattern-band) + var(--space-2xl));
   border-top: 1px solid var(--rule-strong);
   background: none;
   color: var(--color-text);
 }
 
+
 .cta-banner__inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -806,6 +912,7 @@ main {
     --nav-gap: var(--space-lg);
     --section-padding: var(--space-2xl);
     --section-padding-lg: var(--space-3xl);
+    --pattern-band: 132px;
   }
 
   /* Full menu, no hamburger */
@@ -861,12 +968,16 @@ main {
     --wordmark-size: 28px;
     --section-padding: var(--space-3xl);
     --section-padding-lg: var(--space-4xl);
+    --pattern-band: 200px;
   }
 
   /* Hero ------------------------------------------------------------------ */
 
+  /* Tall enough that the cleared middle reads as deliberate space rather
+     than as a gap between two bands. */
   .hero {
-    padding-block: var(--space-3xl) var(--space-4xl);
+    min-height: clamp(600px, 86vh, 920px);
+    padding-block: calc(var(--pattern-band) + var(--space-2xl));
   }
 
   .hero .container {
