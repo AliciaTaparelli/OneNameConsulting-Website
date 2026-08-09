@@ -3,8 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OneName Consulting — Clarity through craft</title>
-  <meta name="description" content="OneName Consulting helps founders and operators make decisions with rigorous analysis and a point of view.">
+  <title>OneName Consulting — Executive Coaching & Compliance Advisory</title>
+  <meta name="description" content="Executive coaching and compliance advisory for leaders navigating complex regulatory and organizational change. 20+ years of global legal, compliance and leadership experience.">
+
+  <!-- Open Graph / social. Absolute og:url and og:image are added by
+       tools/set-domain.py once the client's domain is known. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OneName Consulting">
+  <meta property="og:title" content="OneName Consulting — Executive Coaching & Compliance Advisory">
+  <meta property="og:description" content="Executive coaching and compliance advisory for leaders navigating complex regulatory and organizational change. 20+ years of global legal, compliance and leadership experience.">
+  <meta property="og:locale" content="en">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OneName Consulting — Executive Coaching & Compliance Advisory">
+  <meta name="twitter:description" content="Executive coaching and compliance advisory for leaders navigating complex regulatory and organizational change. 20+ years of global legal, compliance and leadership experience.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "name": "OneName Consulting",
+      "description": "Executive coaching and compliance advisory for leaders navigating complex regulatory and organizational change. 20+ years of global legal, compliance and leadership experience.",
+      "email": "OnenameConsulting@outlook.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/lisette-v-2ba2059/"
+      ],
+      "areaServed": [
+        "Europe",
+        "Asia",
+        "Americas",
+        "Middle East"
+      ],
+      "knowsLanguage": [
+        "nl",
+        "en",
+        "de",
+        "fr"
+      ]
+    },
+    {
+      "@type": "Person",
+      "name": "Lisette",
+      "jobTitle": "Executive Coach & Compliance Advisor",
+      "email": "OnenameConsulting@outlook.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/lisette-v-2ba2059/"
+      ],
+      "knowsLanguage": [
+        "nl",
+        "en",
+        "de",
+        "fr"
+      ],
+      "alumniOf": {
+        "@type": "Organization",
+        "name": "IMD Business School"
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "OneName Consulting"
+      },
+      "knowsAbout": [
+        "Executive coaching",
+        "Anti-bribery and corruption compliance",
+        "Corporate governance",
+        "Regulatory risk",
+        "Internal investigations",
+        "Organizational culture and integrity",
+        "Crisis management"
+      ]
+    }
+  ]
+}
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +90,8 @@
 <body>
   <header class="header">
     <nav class="nav" aria-label="Primary">
-      <a class="logo" href="index.html" aria-label="OneName Consulting — home">
-        <img class="logo__mark" src="assets/images/onename-mark.png" alt="" width="81" height="44">
+      <a class="logo" href="./" aria-label="OneName Consulting — home">
+        <img class="logo__mark" fetchpriority="high" decoding="async" src="assets/images/onename-mark.png" alt="" width="81" height="44">
         <img class="logo__wordmark" src="assets/images/onename-wordmark.png" alt="OneName Consulting" width="82" height="28">
       </a>
 
@@ -31,10 +103,10 @@
       </button>
 
       <ul class="nav__links" id="nav-menu">
-        <li><a href="index.html" class="nav__link active" aria-current="page">Home</a></li>
-        <li><a href="pages/business-coaching.html" class="nav__link">Business Coaching</a></li>
-        <li><a href="pages/consultancy-advisory.html" class="nav__link">Consultancy &amp; Advisory</a></li>
-        <li><a href="pages/about.html" class="nav__link">About</a></li>
+        <li><a href="./" class="nav__link active" aria-current="page">Home</a></li>
+        <li><a href="business-coaching/" class="nav__link">Business Coaching</a></li>
+        <li><a href="consultancy-advisory/" class="nav__link">Consultancy &amp; Advisory</a></li>
+        <li><a href="about/" class="nav__link">About</a></li>
       </ul>
     </nav>
   </header>
@@ -52,8 +124,8 @@
         </p>
 
         <div class="hero__cta">
-          <a class="btn btn--primary" href="pages/consultancy-advisory.html">Explore our work</a>
-          <a class="btn btn--secondary" href="pages/about.html">Learn our approach</a>
+          <a class="btn btn--primary" href="consultancy-advisory/">Explore our work</a>
+          <a class="btn btn--secondary" href="about/">Learn our approach</a>
         </div>
       </div>
     </section>
@@ -64,7 +136,7 @@
 
     <div class="container footer__inner">
       <div class="footer__brand">
-        <img class="footer__wordmark" src="assets/images/onename-wordmark.png"
+        <img class="footer__wordmark" loading="lazy" decoding="async" src="assets/images/onename-wordmark.png"
              alt="OneName Consulting" width="76" height="26">
         <p class="footer__tagline">
           Executive coaching and compliance advisory for leaders navigating
@@ -75,18 +147,18 @@
       <nav class="footer__nav" aria-label="Footer">
         <h2 class="eyebrow">Pages</h2>
         <ul class="footer__list">
-          <li><a class="footer__link" href="index.html" aria-current="page">Home</a></li>
-          <li><a class="footer__link" href="pages/business-coaching.html">Business Coaching</a></li>
-          <li><a class="footer__link" href="pages/consultancy-advisory.html">Consultancy &amp; Advisory</a></li>
-          <li><a class="footer__link" href="pages/about.html">About</a></li>
+          <li><a class="footer__link" href="./" aria-current="page">Home</a></li>
+          <li><a class="footer__link" href="business-coaching/">Business Coaching</a></li>
+          <li><a class="footer__link" href="consultancy-advisory/">Consultancy &amp; Advisory</a></li>
+          <li><a class="footer__link" href="about/">About</a></li>
         </ul>
       </nav>
 
       <div class="footer__contact">
         <h2 class="eyebrow">Contact</h2>
         <ul class="footer__list">
-          <li><a class="footer__link" href="mailto:hello@onenameconsulting.com">hello@onenameconsulting.com</a></li>
-          <li><a class="footer__link" href="https://www.linkedin.com/">LinkedIn</a></li>
+          <li><a class="footer__link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a></li>
+          <li><a class="footer__link" href="https://www.linkedin.com/in/lisette-v-2ba2059/">LinkedIn</a></li>
         </ul>
       </div>
 
