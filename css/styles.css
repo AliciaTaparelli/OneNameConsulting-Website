@@ -874,6 +874,180 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13a. Interior page furniture
+   Shared by the service pages, so a second one costs no new CSS.
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--section-padding-lg);
+}
+
+.page-hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero__title {
+  max-width: 18ch;
+  margin-top: var(--space-md);
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.page-hero__subtitle {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+
+.page-hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+
+/* Opening paragraph of a section, set a size above the body copy. */
+.lead {
+  max-width: var(--measure);
+  margin-top: var(--space-lg);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.prose {
+  max-width: 62ch;
+  margin-top: var(--space-lg);
+  font-size: var(--text-sm);
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.prose + .prose {
+  margin-top: var(--space-lg);
+}
+
+/* Closing line of a section — carries a little more weight than prose. */
+.section__outro {
+  max-width: var(--measure);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.35;
+  color: var(--color-primary);
+}
+
+/* Unnumbered sibling of .expertise-grid, for entries that aren't an index. */
+.card-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+/* Process — the one place numbering is honest, because the steps happen in
+   this order. Everywhere else on the site, numbers would be decoration. */
+.process-list {
+  counter-reset: step;
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.process-item {
+  counter-increment: step;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-hairline);
+}
+
+.process-item::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.process-item__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-primary);
+}
+
+.process-item__text {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.pullquote {
+  max-width: 34ch;
+  margin-top: var(--space-2xl);
+  padding-left: var(--space-lg);
+  border-left: 2px solid var(--color-accent);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--color-primary);
+}
+
+/* A ruled frame with the artwork inside it, used once per page at most. */
+.framed {
+  position: relative;
+  overflow: hidden;
+  margin-top: var(--space-2xl);
+  padding: var(--space-lg);
+  border: 1px solid var(--rule-hairline);
+}
+
+.framed > *:not(.pattern-accent) {
+  position: relative;
+  z-index: 1;
+}
+
+.pattern-accent--frame {
+  inset: 0;
+  -webkit-mask-image: radial-gradient(100% 110% at 100% 100%,
+    #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 78%);
+  mask-image: radial-gradient(100% 110% at 100% 100%,
+    #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 78%);
+}
+
+/* Inline link inside body copy. */
+.link {
+  color: var(--color-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
    13b. Footer
 
    The pattern band is the closing flourish and lives here rather than being
@@ -1015,6 +1189,22 @@ main {
   .footer__inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--space-2xl);
+  }
+
+  .card-grid,
+  .process-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-2xl);
+  }
+
+  .page-hero__actions {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .framed {
+    padding: var(--space-xl);
   }
 }
 
@@ -1160,6 +1350,28 @@ main {
   .footer__inner {
     grid-template-columns: 1.6fr 1fr 1fr;
     column-gap: var(--space-3xl);
+  }
+
+  /* Same stepped, unequal columns as the rest of the site. */
+  .card-grid {
+    grid-template-columns: 1.15fr 1fr 0.85fr;
+    column-gap: var(--space-3xl);
+  }
+
+  .card-grid > *:nth-child(3n + 2) {
+    margin-top: var(--space-xl);
+  }
+
+  .card-grid > *:nth-child(3n) {
+    margin-top: var(--space-3xl);
+  }
+
+  .process-list {
+    column-gap: var(--space-3xl);
+  }
+
+  .framed {
+    padding: var(--space-2xl);
   }
 }
 
