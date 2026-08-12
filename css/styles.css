@@ -1143,8 +1143,8 @@ main {
 
 /* Ratios differ per piece, so no two are the same size. */
 .studio-figure--1 img { aspect-ratio: 4 / 5; }
-.studio-figure--2 img { aspect-ratio: 3 / 4; }
-.studio-figure--3 img { aspect-ratio: 1 / 1; }
+.studio-figure--2 img { aspect-ratio: 1 / 1; }
+.studio-figure--3 img { aspect-ratio: 4 / 5; }
 .studio-figure--4 img { aspect-ratio: 4 / 3; }
 
 /* Inline link inside body copy. */
