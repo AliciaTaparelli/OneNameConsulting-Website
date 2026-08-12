@@ -1455,10 +1455,13 @@ main {
     row-gap: var(--space-3xl);
   }
 
+  /* Two anchors do the work: pieces 1 and 3 share a left edge, pieces 2 and
+     4 share a right edge. Only the inner seam moves, so the hang varies
+     without every edge being loose at once. */
   .studio-figure--1 { grid-column: 1 / 7;  grid-row: 1; }
-  .studio-figure--2 { grid-column: 8 / 12; grid-row: 1; margin-top: var(--space-4xl); }
-  .studio-figure--3 { grid-column: 3 / 7;  grid-row: 2; }
-  .studio-figure--4 { grid-column: 7 / 13; grid-row: 2; margin-top: var(--space-2xl); }
+  .studio-figure--2 { grid-column: 8 / 13; grid-row: 1; margin-top: var(--space-3xl); }
+  .studio-figure--3 { grid-column: 1 / 5;  grid-row: 2; }
+  .studio-figure--4 { grid-column: 6 / 13; grid-row: 2; margin-top: var(--space-xl); }
 
   /* Brand block takes the wider column; the two link lists sit beside it. */
   .footer__inner {
