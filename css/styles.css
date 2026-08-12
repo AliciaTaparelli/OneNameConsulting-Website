@@ -515,10 +515,10 @@ main {
   text-wrap: balance;
 }
 
-/* Section number as editorial metadata above the heading — 01 —, 02 —.
+/* Section number as editorial metadata above the heading: 01, 02.
    Generated, so the markup carries no decorative spans. */
 .section__title::before {
-  content: counter(section, decimal-leading-zero) " \2014";
+  content: counter(section, decimal-leading-zero);
   display: block;
   margin-bottom: var(--space-md);
   font-family: var(--font-body);
