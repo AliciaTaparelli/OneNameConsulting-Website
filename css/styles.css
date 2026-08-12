@@ -717,38 +717,11 @@ main {
    11. Expertise, approach and services
    -------------------------------------------------------------------------- */
 
-.expertise-grid,
 .services-grid,
 .approach-grid {
   display: grid;
   gap: var(--space-xl);
   margin-top: var(--space-2xl);
-}
-
-/* An index, not a feature grid: each entry is numbered. */
-.expertise-grid {
-  counter-reset: expertise;
-}
-
-.expertise-card {
-  counter-increment: expertise;
-}
-
-.expertise-card::before {
-  content: counter(expertise, decimal-leading-zero);
-  display: block;
-  margin-bottom: var(--space-md);
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: var(--tracking-meta);
-  line-height: 1;
-  color: var(--color-text-secondary);
-  transition: color var(--transition-fast);
-}
-
-.expertise-card:hover::before {
-  color: var(--color-accent);
 }
 
 /* Pillars carry a rule rather than a card — they are principles, not offers,
@@ -975,6 +948,56 @@ main {
     #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 78%);
 }
 
+/* An index rather than a card grid: one row per entry, rules running the full
+   measure so they stack into a continuous ledger down the page. Titles get the
+   whole column width, so they stop wrapping into three ragged lines. */
+.index-list {
+  counter-reset: idx;
+  margin-top: var(--space-2xl);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.index-list__item {
+  counter-increment: idx;
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-lg);
+  border-bottom: 1px solid var(--rule-hairline);
+}
+
+/* The number is generated, so it costs no markup and becomes the first
+   column of the row at desktop width. */
+.index-list__item::before {
+  content: counter(idx, decimal-leading-zero);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  line-height: 1.9;
+  color: var(--color-accent);
+}
+
+.index-list__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+  text-wrap: balance;
+  transition: color var(--transition-fast);
+}
+
+.index-list__item:hover .index-list__title {
+  color: var(--color-accent);
+}
+
+.index-list__text {
+  max-width: 52ch;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
 /* Items reading as one line, divided by a terracotta point. Used where a
    list is the content itself and explanatory text would only pad it. */
 .sep-list {
@@ -1143,7 +1166,6 @@ main {
     gap: var(--space-2xl);
   }
 
-  .expertise-grid,
   .services-grid,
   .approach-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1258,31 +1280,14 @@ main {
 
   /* Index and grids ------------------------------------------------------- */
 
-  .expertise-grid,
   .services-grid {
     grid-template-columns: 1.15fr 1fr 0.85fr;
     column-gap: var(--space-3xl);
   }
 
-  /* Stepped columns. Applied by column position so all six entries in the
-     expertise index step consistently rather than at random. */
-  .expertise-card:nth-child(3n + 2),
-  .services-card:nth-child(3n + 2) {
-    margin-top: var(--space-xl);
-  }
-
-  .expertise-card:nth-child(3n),
-  .services-card:nth-child(3n) {
-    margin-top: var(--space-3xl);
-  }
-
   .approach-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: var(--space-xl);
-  }
-
-  .approach-pillar:nth-child(even) {
-    margin-top: var(--space-xl);
   }
 
   .credentials-grid {
@@ -1314,6 +1319,13 @@ main {
     column-gap: var(--space-3xl);
   }
 
+  .index-list__item {
+    grid-template-columns: 3.5rem minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    column-gap: var(--space-2xl);
+    padding-block: var(--space-xl);
+  }
+
   .framed {
     padding: var(--space-2xl);
   }
@@ -1333,7 +1345,7 @@ main {
   .footer__link::after,
   .nav__toggle-bar,
   .card,
-  .expertise-card::before,
+  .index-list__title,
   .services-card__link,
   .about-header__portrait img {
     transition: none;
