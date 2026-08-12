@@ -965,30 +965,53 @@ main {
   border-bottom: 1px solid var(--rule-hairline);
 }
 
-/* The number is generated, so it costs no markup and becomes the first
-   column of the row at desktop width. */
+/* The gesture: the numeral is set at display size and drawn as an outline,
+   so it reads as a printed folio rather than a label. It fills in on hover. */
 .index-list__item::before {
   content: counter(idx, decimal-leading-zero);
-  font-size: var(--text-xs);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
   font-weight: 500;
-  letter-spacing: var(--tracking-meta);
-  line-height: 1.9;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--color-accent) 34%, transparent);
+  transition: color var(--transition-fast);
+}
+
+/* Where the browser can stroke text, the numeral is hollow. */
+@supports (-webkit-text-stroke: 1px red) {
+  .index-list__item::before {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-accent);
+    transition: color var(--transition-fast),
+      -webkit-text-stroke-color var(--transition-fast);
+  }
+
+  .index-list__item:hover::before {
+    -webkit-text-stroke-color: transparent;
+  }
+}
+
+.index-list__item:hover::before {
   color: var(--color-accent);
 }
 
 .index-list__title {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  transform-origin: left;
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--color-primary);
   text-wrap: balance;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
+/* Transform rather than padding, so the row never reflows under the cursor. */
 .index-list__item:hover .index-list__title {
   color: var(--color-accent);
+  transform: translateX(5px);
 }
 
 .index-list__text {
@@ -1320,11 +1343,18 @@ main {
   }
 
   .index-list__item {
-    grid-template-columns: 3.5rem minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: start;
+    grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 0.95fr);
+    align-items: baseline;
     column-gap: var(--space-2xl);
     padding-block: var(--space-xl);
   }
+
+  /* Alternate rows step in. The rule stays on the item's padding box, so it
+     still spans the full measure — the content weaves, the ledger does not. */
+  .index-list__item:nth-child(even) {
+    padding-left: var(--space-3xl);
+  }
+
 
   .framed {
     padding: var(--space-2xl);
@@ -1345,6 +1375,7 @@ main {
   .footer__link::after,
   .nav__toggle-bar,
   .card,
+  .index-list__item::before,
   .index-list__title,
   .services-card__link,
   .about-header__portrait img {
@@ -1352,6 +1383,7 @@ main {
   }
 
   .btn:hover::after,
+  .index-list__item:hover .index-list__title,
   .card:hover,
   .card:focus-within,
   .services-card__link:hover,
