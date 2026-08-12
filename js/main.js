@@ -54,3 +54,43 @@
 
   setOpen(false);
 })();
+
+/* Reveal on scroll ---------------------------------------------------------
+   Rows arrive as they enter the viewport. The CSS only hides them when the
+   .js class is set, so if this script never runs the content is simply
+   visible. Anyone who asked for less motion gets everything at once.       */
+
+(function () {
+  "use strict";
+
+  var targets = document.querySelectorAll(".reveal");
+
+  if (!targets.length) {
+    return;
+  }
+
+  function showAll() {
+    targets.forEach(function (el) {
+      el.classList.add("is-visible");
+    });
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)) {
+    showAll();
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);   // reveal once, not on every pass
+      }
+    });
+  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.15 });
+
+  targets.forEach(function (el) {
+    observer.observe(el);
+  });
+})();

@@ -960,17 +960,50 @@ main {
 .index-list__item {
   counter-increment: idx;
   display: grid;
-  gap: var(--space-sm);
+  gap: var(--space-lg);
   padding-block: var(--space-lg);
   border-bottom: 1px solid var(--rule-hairline);
 }
 
+/* Each entry gets its own crop of the artwork, so the section reads as
+   pictures and text rather than columns of prose. Positions differ per row,
+   so no two tiles show the same passage of the drawing. */
+.index-list__media {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  border: 1px solid var(--rule-hairline);
+  background-image: url("../assets/images/pattern.webp");
+  background-repeat: no-repeat;
+  background-size: 260% auto;
+  overflow: hidden;
+  transition: background-size var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.index-list__item:nth-child(1) .index-list__media { background-position: 8% 18%; }
+.index-list__item:nth-child(2) .index-list__media { background-position: 72% 62%; }
+.index-list__item:nth-child(3) .index-list__media { background-position: 34% 88%; }
+.index-list__item:nth-child(4) .index-list__media { background-position: 90% 12%; }
+.index-list__item:nth-child(5) .index-list__media { background-position: 50% 44%; }
+.index-list__item:nth-child(6) .index-list__media { background-position: 18% 70%; }
+
+.index-list__item:hover .index-list__media {
+  background-size: 285% auto;
+  border-color: var(--color-accent);
+}
+
+.index-list__body {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
 /* The gesture: the numeral is set at display size and drawn as an outline,
    so it reads as a printed folio rather than a label. It fills in on hover. */
-.index-list__item::before {
+.index-list__body::before {
   content: counter(idx, decimal-leading-zero);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 500;
   line-height: 0.82;
   letter-spacing: -0.04em;
@@ -980,19 +1013,19 @@ main {
 
 /* Where the browser can stroke text, the numeral is hollow. */
 @supports (-webkit-text-stroke: 1px red) {
-  .index-list__item::before {
+  .index-list__body::before {
     color: transparent;
     -webkit-text-stroke: 1px var(--color-accent);
     transition: color var(--transition-fast),
       -webkit-text-stroke-color var(--transition-fast);
   }
 
-  .index-list__item:hover::before {
+  .index-list__item:hover .index-list__body::before {
     -webkit-text-stroke-color: transparent;
   }
 }
 
-.index-list__item:hover::before {
+.index-list__item:hover .index-list__body::before {
   color: var(--color-accent);
 }
 
@@ -1048,6 +1081,26 @@ main {
   line-height: 1.7;
   color: var(--color-text-muted);
 }
+
+/* Entrance reveal. Only armed when scripting is present, so without JS the
+   content is simply visible rather than stuck at zero opacity. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered, so rows arrive in sequence rather than as one block. */
+.js .reveal:nth-child(2) { transition-delay: 90ms; }
+.js .reveal:nth-child(3) { transition-delay: 180ms; }
+.js .reveal:nth-child(4) { transition-delay: 270ms; }
+.js .reveal:nth-child(5) { transition-delay: 360ms; }
+.js .reveal:nth-child(6) { transition-delay: 450ms; }
 
 /* Inline link inside body copy. */
 .link {
@@ -1343,8 +1396,8 @@ main {
   }
 
   .index-list__item {
-    grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 0.95fr);
-    align-items: baseline;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    align-items: start;
     column-gap: var(--space-2xl);
     padding-block: var(--space-xl);
   }
@@ -1375,7 +1428,7 @@ main {
   .footer__link::after,
   .nav__toggle-bar,
   .card,
-  .index-list__item::before,
+  .index-list__body::before,
   .index-list__title,
   .services-card__link,
   .about-header__portrait img {
@@ -1384,11 +1437,19 @@ main {
 
   .btn:hover::after,
   .index-list__item:hover .index-list__title,
+  .js .reveal,
   .card:hover,
   .card:focus-within,
   .services-card__link:hover,
   .about-header__portrait:hover img {
     transform: none;
+  }
+
+  /* Never withhold content from anyone who asked for less motion. */
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
   /* The active-page rule must still be drawn without a transition. */
