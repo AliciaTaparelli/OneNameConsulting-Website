@@ -1102,6 +1102,26 @@ main {
 .js .reveal:nth-child(5) { transition-delay: 360ms; }
 .js .reveal:nth-child(6) { transition-delay: 450ms; }
 
+/* A photograph used as evidence, ruled like everything else on the page. */
+.feature-figure {
+  margin: var(--space-2xl) 0 0;
+}
+
+.feature-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule-hairline);
+}
+
+.feature-figure__caption {
+  margin-top: var(--space-md);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
 /* Inline link inside body copy. */
 .link {
   color: var(--color-primary);
