@@ -171,6 +171,28 @@ main {
   outline-offset: 3px;
 }
 
+/* Off-screen until focused, so keyboard users can jump the navigation
+   instead of tabbing the logo and four links on every page. */
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: var(--space-md);
+  z-index: 200;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 /* --------------------------------------------------------------------------
    4. Layout
    -------------------------------------------------------------------------- */
@@ -1160,6 +1182,14 @@ main {
   margin-top: var(--space-2xl);
   padding-top: var(--space-lg);
   border-top: 1px solid var(--rule-strong);
+}
+
+/* The button opens a mail client, which plenty of visitors do not have
+   configured. This keeps the address readable and copyable regardless. */
+.cta-banner__fallback {
+  margin-top: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
 }
 
 /* Inline link inside body copy. */

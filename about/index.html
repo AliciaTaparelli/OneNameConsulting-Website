@@ -87,12 +87,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
   <link rel="stylesheet" href="../css/styles.css">
 
   <!-- Set before first paint so the mobile menu never flashes open. -->
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="header">
     <nav class="nav" aria-label="Primary">
       <a class="logo" href="../" aria-label="OneName Consulting, home">
@@ -116,7 +121,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
     <!-- 1. Page header -->
     <section class="about-header">
@@ -454,6 +459,9 @@
         <div class="cta-banner__actions">
           <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com">Book a call</a>
         </div>
+          <p class="cta-banner__fallback">
+            Or write to <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+          </p>
       </div>
     </section>
 

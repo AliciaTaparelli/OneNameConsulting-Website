@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found | OneName Consulting</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+
+  <!-- Root-relative, because GitHub Pages serves this file for any missing
+       path and relative links would resolve against that path instead. -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="header">
+    <nav class="nav" aria-label="Primary">
+      <a class="logo" href="/" aria-label="OneName Consulting, home">
+        <img class="logo__mark" fetchpriority="high" decoding="async" src="/assets/images/onename-mark.png" alt="" width="81" height="44">
+        <img class="logo__wordmark" src="/assets/images/onename-wordmark.png" alt="OneName Consulting" width="82" height="28">
+      </a>
+
+      <button class="nav__toggle" type="button" aria-expanded="false"
+              aria-controls="nav-menu" aria-label="Open menu">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__links" id="nav-menu">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li><a href="/business-coaching/" class="nav__link">Business Coaching</a></li>
+        <li><a href="/consultancy-advisory/" class="nav__link">Consultancy &amp; Advisory</a></li>
+        <li><a href="/about/" class="nav__link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Error 404</p>
+        <h1 class="page-hero__title">This page does not exist</h1>
+        <p class="page-hero__subtitle">
+          The link may be out of date, or the address mistyped. Everything on
+          the site is one click away below.
+        </p>
+
+        <div class="page-hero__actions">
+          <a class="btn btn--solid" href="/">Back to the home page</a>
+          <a class="btn btn--secondary" href="/about/">About Lisette</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
