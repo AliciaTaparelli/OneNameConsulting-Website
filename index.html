@@ -127,56 +127,98 @@
     <section class="hero">
       <div class="pattern-accent pattern-accent--hero" aria-hidden="true"></div>
 
-      <div class="container">
-        <p class="eyebrow">Executive Coaching &amp; Advisory</p>
+      <div class="hero__grid">
+        <div class="hero__body">
+          <p class="eyebrow">Executive Coaching &amp; Advisory</p>
 
-        <h1 class="hero__title">Grow, lead with <em>purpose</em>, create lasting impact.</h1>
+          <h1 class="hero__title">Grow, lead with <em>purpose</em>, create lasting impact.</h1>
 
-        <p class="hero__description">
-          Executive coaching and advisory for leaders, teams and organizations,
-          drawing on more than 20 years of international leadership experience.
-        </p>
+          <p class="hero__description">
+            Executive coaching and advisory for leaders, teams and organizations,
+            drawing on more than 20 years of international leadership experience.
+          </p>
 
-        <div class="hero__cta">
-          <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com?subject=Enquiry">Book a conversation</a>
-          <a class="btn btn--secondary" href="about/">About Lisette</a>
+          <div class="hero__cta">
+            <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com?subject=Enquiry">Book a conversation</a>
+            <a class="btn btn--secondary" href="about/">About Lisette</a>
+          </div>
+        </div>
+
+        <div class="hero__media">
+          <img src="assets/images/lisette-portrait.jpg"
+               alt="Lisette van Eenennaam, executive coach and compliance advisor"
+               width="880" height="1100"
+               fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
 
-    <!-- What she offers -->
+    <!-- Track record -->
+    <section class="proof">
+      <div class="container proof__grid">
+        <div>
+          <p class="eyebrow proof__eyebrow">Track record</p>
+
+          <div class="proof__figures">
+            <div class="proof__fact">
+              <p class="proof__figure">20+ years</p>
+              <p class="proof__label">Legal, compliance and leadership roles at ABB</p>
+            </div>
+            <div class="proof__fact">
+              <p class="proof__figure">4 regions</p>
+              <p class="proof__label">Europe, Asia, the Americas and the Middle East</p>
+            </div>
+          </div>
+        </div>
+
+        <ul class="proof__roles">
+          <li class="proof__role">Global General Counsel, ABB Robotics &amp; Discrete Automation</li>
+          <li class="proof__role">Member, ABB Group Legal &amp; Integrity Leadership Team</li>
+          <li class="proof__role">Supervisory Board Member, ABB Discrete Automation (Austria)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Two ways in -->
     <section class="section">
       <div class="container">
         <h2 class="section__title">What Lisette offers</h2>
 
-        <div class="services-grid">
-          <article class="card services-card">
-            <h3 class="card__title">Executive Coaching</h3>
-            <p class="card__text">
-              One-to-one coaching for senior leaders and executives, on
-              transitions, decision-making, resilience and leading with greater
-              confidence and impact.
+        <div class="doors">
+          <article class="door">
+            <a class="door__media" href="business-coaching/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/door-coaching.jpg"
+                   alt="" width="1200" height="750" loading="lazy" decoding="async">
+            </a>
+            <h3 class="door__title">Executive Coaching</h3>
+            <p class="door__text">
+              For senior leaders and executives working through transitions,
+              decision-making, resilience and leading with greater confidence.
             </p>
             <a class="services-card__link" href="business-coaching/">Executive coaching &rarr;</a>
           </article>
 
-          <article class="card services-card">
-            <h3 class="card__title">Consultancy &amp; Advisory</h3>
-            <p class="card__text">
-              Advisory for organizations on governance, compliance, legal
+          <article class="door">
+            <a class="door__media" href="consultancy-advisory/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/door-advisory.jpg"
+                   alt="" width="1200" height="750" loading="lazy" decoding="async">
+            </a>
+            <h3 class="door__title">Consultancy &amp; Advisory</h3>
+            <p class="door__text">
+              For organizations strengthening governance, compliance, legal
               operations, investigations and organizational change.
             </p>
             <a class="services-card__link" href="consultancy-advisory/">Consultancy &amp; advisory &rarr;</a>
           </article>
         </div>
-
-        <ul class="sep-list credentials-line hero__proof">
-          <li>20+ years at ABB</li>
-          <li>Global General Counsel, Robotics &amp; Discrete Automation</li>
-          <li>Europe, Asia, the Americas and the Middle East</li>
-          <li>Dutch, English, German, French</li>
-        </ul>
       </div>
+    </section>
+
+    <!-- Evidence -->
+    <section class="showcase" aria-label="Lisette on a general counsel panel">
+      <img src="assets/images/lisette-panel.jpg"
+           alt="Lisette van Eenennaam speaking on a general counsel panel alongside two other senior legal executives"
+           width="1182" height="664" loading="lazy" decoding="async">
     </section>
 
     <!-- Contact -->
@@ -192,10 +234,10 @@
 
         <div class="cta-banner__actions">
           <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com?subject=Enquiry">Book a conversation</a>
-        </div>
           <p class="cta-banner__fallback">
             Or write to <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
           </p>
+        </div>
       </div>
     </section>
 
