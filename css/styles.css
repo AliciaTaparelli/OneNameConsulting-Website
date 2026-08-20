@@ -404,13 +404,15 @@ main {
   opacity: var(--pattern-opacity-section);
 }
 
-/* Drawn short rather than cropped from the full field, so the closing band
-   has no sliced curves. Full opacity — this one is the accent, not a wash. */
+/* Full opacity — this one is the accent, not a wash. Anchored to the foot of
+   the artwork because that is the only region whose dots run unbroken from
+   edge to edge; sliced anywhere higher, the band crosses one of the field's
+   white voids and reads as two torn-off pieces rather than one rule. */
 .pattern-divider {
   height: var(--pattern-divider-h);
   background-image: url("../assets/images/pattern.webp");
   background-size: cover;
-  background-position: center 42%;
+  background-position: center bottom;
   background-repeat: no-repeat;
 }
 
