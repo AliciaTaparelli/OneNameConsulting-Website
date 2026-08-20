@@ -37,6 +37,14 @@
      on its own. */
   --color-accent: #A55232;          /* muted terracotta — 4.56:1 on bisque */
 
+  /* Reversed-out variants for the forest proof band. The band is the only
+     dark surface on the site, and the base accent measures 2.03:1 on forest —
+     far below the 4.5:1 floor — so it cannot be used there. These three exist
+     for that band alone and are not a second brand palette. */
+  --color-on-primary-muted: #B8B5AE;   /* 5.41:1 on forest */
+  --color-accent-on-primary: #D8977E;  /* base accent lightened 25%, 4.56:1 */
+  --rule-on-primary: rgba(240, 234, 225, 0.24);
+
   /* Rule-work does most of the structural work now that cards are gone. */
   --rule-hairline: rgba(27, 67, 50, 0.18);
   --rule-strong: rgba(27, 67, 50, 0.42);
