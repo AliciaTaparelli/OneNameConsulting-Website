@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="60" height="40" role="img" aria-label="Pride flag" shape-rendering="crispEdges">
+  <title>Pride flag</title>
+  <rect width="60" height="6.667" y="0" fill="#e40303"/>
+  <rect width="60" height="6.667" y="6.667" fill="#ff8c00"/>
+  <rect width="60" height="6.667" y="13.333" fill="#ffed00"/>
+  <rect width="60" height="6.667" y="20" fill="#008026"/>
+  <rect width="60" height="6.667" y="26.667" fill="#004dff"/>
+  <rect width="60" height="6.666" y="33.333" fill="#750787"/>
+</svg>

@@ -1272,11 +1272,31 @@ main {
 
 .footer__legal {
   grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
   padding-top: var(--space-lg);
   border-top: 1px solid var(--rule-hairline);
   font-size: var(--text-xs);
   letter-spacing: 0.02em;
   color: var(--color-text-secondary);
+}
+
+/* Sits at cap height with the legal line rather than shouting: it is a signal,
+   not a badge. Slightly held back so the six stripes do not out-saturate a
+   palette that is otherwise bisque and green. */
+.footer__flag {
+  flex: none;
+  height: 14px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.footer__legal:hover .footer__flag {
+  opacity: 1;
 }
 
 /* --------------------------------------------------------------------------
