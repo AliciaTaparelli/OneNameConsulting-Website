@@ -109,7 +109,10 @@ Explicit `width`/`height` to reserve space.
 `.proof__figures` list of two items (each `.proof__figure` + `.proof__label`)
 and a `.proof__roles` list of three items.
 
-**Content** — every item already published elsewhere on the site:
+**Content** — every item traceable to the bios or to About. The three roles and
+`20+ years` are verbatim; `4 regions` is a count of the four regions the short
+bio names explicitly ("Her experience spans Europe, Asia, the Americas and the
+Middle East"), and its label reproduces them verbatim. Nothing is invented:
 
 Figures, for scale. These follow the existing `.story__fact` convention on
 About, where the figure carries its unit inline and the label sits beneath a
