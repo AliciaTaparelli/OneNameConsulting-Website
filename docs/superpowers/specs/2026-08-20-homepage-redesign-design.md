@@ -39,6 +39,9 @@ the product, so the headshot leads.
 2. **No testimonials, no client names, no outcome numbers exist.** Confirmed
    with the owner. Proof is built from the ABB career facts already on the
    site, given display weight. Nothing is invented.
+   Source of record for credentials is
+   `Dev Projects/Lisette Website/One Consulting Bios/*.docx`, written by
+   Lisette herself. Anything not traceable to those bios does not ship.
 3. **Both services carry equal weight.** The visitor self-selects.
 4. **Headline and CTA are unchanged.** "Grow, lead with *purpose*, create
    lasting impact" was chosen from Lisette's own bio in an earlier deliberate
@@ -102,19 +105,44 @@ Explicit `width`/`height` to reserve space.
 
 ## 2. Proof band
 
-**Markup:** `<section class="proof">` containing an `.eyebrow`, one
-`.proof__lead` line, and a `.proof__figures` list of three items, each an
-`.proof__figure` (value) plus `.proof__label`.
+**Markup:** `<section class="proof">` containing an `.eyebrow`, a
+`.proof__figures` list of two items (each `.proof__figure` + `.proof__label`)
+and a `.proof__roles` list of three items.
 
-**Content** — drawn only from facts already on the site:
+**Content** — every item already published elsewhere on the site:
 
-- Lead line: *Global General Counsel, Robotics & Discrete Automation at ABB*
-- `20+` — years at ABB
+Figures, for scale:
+
+- `20+` — years in legal, compliance and leadership
 - `4` — regions: Europe, Asia, the Americas, the Middle East
-- `4` — languages: Dutch, English, German, French
 
-The role does not reduce to a number, so it leads as a sentence rather than
-being forced into a fourth column.
+Roles, for substance:
+
+- Global General Counsel, ABB Robotics & Discrete Automation
+- Member, ABB Group Legal & Integrity Leadership Team
+- Supervisory Board Member, ABB Discrete Automation (Austria)
+
+Rationale: to a general counsel or a board, the seats she held are the
+credential; a language count is decoration. The three roles come from
+`about/index.html` where they are already published.
+
+**Deliberately excluded:**
+
+- **Languages.** The homepage list currently reads "Dutch, English, German,
+  French" flat, but About correctly records French as *working knowledge*. A
+  display-size `4` overstates it.
+- **"100+ countries."** `about/index.html:344` reads "Experience in 100+
+  countries", but the source bio attributes that figure to ABB's operating
+  footprint, not to Lisette. It is a misattribution on an existing page —
+  flagged to the owner, out of scope here, and must not be promoted to a
+  display figure.
+- **IMD / ICF.** Both are legitimately "in progress" and are already
+  correctly marked so on About. In-progress qualifications do not belong in
+  a proof band.
+
+**Layout:** desktop grid `minmax(0, 1fr) minmax(0, 1.4fr)` — the two figures
+side by side in the left column, the three roles stacked with hairline rules
+in the right. Everything stacks on mobile, roles separated by rules.
 
 **Full-bleed technique:** the section gets `background: var(--color-primary)`
 at full width with an inner `.container`, matching how `.pattern-divider`
@@ -166,8 +194,10 @@ testimonials available, this is the page's only evidence of her operating at
 the level being sold to.
 
 **Uncaptioned.** The backdrop reads "General Counsel" but the event name is
-not legible and will not be invented. Descriptive alt text only. If the owner
-supplies the event name later, a caption can be added.
+not legible. All three bios were searched and none mentions the event, so
+there is no source to caption it from and it will not be invented.
+Descriptive alt text only. If Lisette recalls the event, a caption can be
+added later.
 
 `loading="lazy"`, explicit dimensions.
 
