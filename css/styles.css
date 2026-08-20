@@ -61,7 +61,9 @@
   --text-xl: clamp(1.25rem, 1.6vw + 0.9rem, 1.625rem);   /* card headings */
   --text-3xl: clamp(1.875rem, 4.5vw, 3rem);              /* section h2 */
   --text-5xl: clamp(2.5rem, 7vw, 4.5rem);                /* page h1 */
-  --text-display: clamp(3rem, 11.5vw, 9rem);             /* hero only */
+  /* Homepage hero only — one consumer, .hero__title. The 9rem cap assumed a
+     full-width headline; at 56% of the grid it set two words per line. */
+  --text-display: clamp(2.5rem, 6.5vw, 6rem);
 
   /* Editorial metadata: small, wide, uppercase. One treatment, used
      everywhere that isn't display or body. */
@@ -427,12 +429,31 @@ main {
 .hero {
   position: relative;
   overflow: hidden;
-  padding-block: var(--section-padding) var(--space-3xl);
+  padding-block: 0 var(--space-3xl);
 }
 
-.hero > .container {
+/* Mobile opens on the photograph, not on type. */
+.hero__grid {
   position: relative;
   z-index: 1;
+  display: grid;
+}
+
+.hero__media {
+  order: -1;
+}
+
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.hero__body {
+  padding-inline: var(--container-gutter);
+  padding-block: var(--space-xl) 0;
 }
 
 .hero__title {
@@ -1365,6 +1386,26 @@ main {
     gap: var(--space-xl);
   }
 
+  .hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-xl);
+    padding-inline: var(--container-gutter);
+  }
+
+  .hero__body {
+    order: -1;
+    padding-inline: 0;
+  }
+
+  .hero__media {
+    order: 0;
+  }
+
+  .hero__media img {
+    aspect-ratio: 4 / 5;
+  }
+
   .services-grid,
   .approach-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1432,36 +1473,38 @@ main {
 
   /* Hero ------------------------------------------------------------------ */
 
-  /* No band overhead now, so the hero reverts to its own rhythm. */
-  .hero {
-    padding-block: var(--space-3xl) var(--space-4xl);
+  /* Three columns: a left gutter that lines .hero__body up with the site
+     container, the type, then the photograph running to the right edge.
+     The gutter is computed from 100% of the section box, never 100vw, so a
+     scrollbar cannot push the page into horizontal overflow. */
+  .hero__grid {
+    grid-template-columns:
+      minmax(
+        var(--container-gutter),
+        calc((100% - var(--container-max)) / 2 + var(--container-gutter))
+      )
+      minmax(0, 1fr)
+      minmax(0, 0.82fr);
+    align-items: stretch;
+    min-height: 76vh;
   }
 
-  .hero .container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--space-xl);
+  .hero__body {
+    grid-column: 2;
+    align-self: center;
+    padding-block: var(--space-3xl);
+    padding-inline: 0 var(--space-2xl);
   }
 
-  /* Optical alignment: the L of the headline hangs a hair left of the rules
-     below it so the left edge reads straight. */
-  .hero__title {
-    grid-column: 1 / -1;
-    margin-left: -0.04em;
+  .hero__media {
+    order: 0;
+    grid-column: 3;
   }
 
-  /* Copy sits low and right of centre; actions sit left beneath it. The
-     diagonal between them is the composition. */
-  .hero__description {
-    grid-column: 7 / 12;
-    margin-top: var(--space-2xl);
-  }
-
-  .hero__cta {
-    grid-column: 1 / 6;
-    grid-row: 2;
-    align-self: end;
-    margin-top: var(--space-2xl);
+  .hero__media img {
+    aspect-ratio: auto;
+    height: 100%;
+    object-position: center top;
   }
 
   /* About header ---------------------------------------------------------- */
