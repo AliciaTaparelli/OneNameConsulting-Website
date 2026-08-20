@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Verify the homepage against docs/superpowers/specs/2026-08-20-homepage-redesign-design.md
 
-No dependencies beyond the standard library and Pillow (already used for the
-image crops). Run from the repository root:
+No dependencies beyond the standard library. Run from the repository root:
 
     python3 tools/check-homepage.py
 """
@@ -89,6 +88,11 @@ def check_tokens():
 
 # --- structure --------------------------------------------------------------
 
+def has_class(html, cls):
+    return any(cls in attr.split()
+               for attr in re.findall(r'class="([^"]*)"', html))
+
+
 def check_structure():
     print("\nstructure")
     html = read(INDEX)
@@ -96,7 +100,7 @@ def check_structure():
     for cls in ["hero__grid", "hero__body", "hero__media",
                 "proof", "proof__figures", "proof__roles",
                 "doors", "door", "showcase"]:
-        check(f"class {cls} present", f'class="{cls}' in html or f' {cls}"' in html or f'"{cls}"' in html)
+        check(f"class {cls} present", has_class(html, cls))
 
     check("hero title unchanged",
           "Grow, lead with <em>purpose</em>, create lasting impact." in html)
