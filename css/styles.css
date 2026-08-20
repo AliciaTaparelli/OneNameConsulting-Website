@@ -995,30 +995,33 @@ main {
   border-bottom: 1px solid var(--rule-hairline);
 }
 
-/* Each entry gets its own crop of the artwork, so the section reads as
-   pictures and text rather than columns of prose. Positions differ per row,
-   so no two tiles show the same passage of the drawing. */
+/* Each entry carries a detail of Lisette's own work: the standing clay figure
+   and the wall of anatomy studies. The image is a custom property on the
+   element, so the markup supplies the source and the CSS keeps the behaviour. */
 .index-list__media {
   position: relative;
   aspect-ratio: 5 / 3;
   border: 1px solid var(--rule-hairline);
-  background-image: url("../assets/images/pattern.webp");
-  background-repeat: no-repeat;
-  background-size: 260% auto;
   overflow: hidden;
-  transition: background-size var(--transition-fast),
-    border-color var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
-.index-list__item:nth-child(1) .index-list__media { background-position: 8% 18%; }
-.index-list__item:nth-child(2) .index-list__media { background-position: 72% 62%; }
-.index-list__item:nth-child(3) .index-list__media { background-position: 34% 88%; }
-.index-list__item:nth-child(4) .index-list__media { background-position: 90% 12%; }
-.index-list__item:nth-child(5) .index-list__media { background-position: 50% 44%; }
-.index-list__item:nth-child(6) .index-list__media { background-position: 18% 70%; }
+/* On a pseudo-element so it can scale inside the border without moving it. */
+.index-list__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--tile);
+  background-size: cover;
+  background-position: center;
+  transition: transform var(--transition-fast);
+}
+
+.index-list__item:hover .index-list__media::before {
+  transform: scale(1.04);
+}
 
 .index-list__item:hover .index-list__media {
-  background-size: 285% auto;
   border-color: var(--color-accent);
 }
 
@@ -1556,6 +1559,7 @@ main {
 
   .btn:hover::after,
   .index-list__item:hover .index-list__title,
+  .index-list__item:hover .index-list__media::before,
   .js .reveal,
   .card:hover,
   .card:focus-within,
