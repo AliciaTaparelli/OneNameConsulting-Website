@@ -111,10 +111,12 @@ and a `.proof__roles` list of three items.
 
 **Content** — every item already published elsewhere on the site:
 
-Figures, for scale:
+Figures, for scale. These follow the existing `.story__fact` convention on
+About, where the figure carries its unit inline and the label sits beneath a
+rule:
 
-- `20+` — years in legal, compliance and leadership
-- `4` — regions: Europe, Asia, the Americas, the Middle East
+- **20+ years** — legal, compliance and leadership roles at ABB
+- **4 regions** — Europe, Asia, the Americas, the Middle East
 
 Roles, for substance:
 
@@ -131,11 +133,13 @@ credential; a language count is decoration. The three roles come from
 - **Languages.** The homepage list currently reads "Dutch, English, German,
   French" flat, but About correctly records French as *working knowledge*. A
   display-size `4` overstates it.
-- **"100+ countries."** `about/index.html:344` reads "Experience in 100+
-  countries", but the source bio attributes that figure to ABB's operating
-  footprint, not to Lisette. It is a misattribution on an existing page —
-  flagged to the owner, out of scope here, and must not be promoted to a
-  display figure.
+- **"100+ countries."** The bio gives this as ABB's operating footprint, not
+  as Lisette's personal reach. About states it correctly in two places
+  (line 160, "ABB, a global technology leader operating in 100+ countries";
+  line 207, labelled "Operating footprint") and incorrectly in one —
+  **line 362, "Experience in 100+ countries"**. That single line is a
+  misattribution; flagged to the owner, out of scope here. The figure does
+  not go on the homepage in any form.
 - **IMD / ICF.** Both are legitimately "in progress" and are already
   correctly marked so on About. In-progress qualifications do not belong in
   a proof band.
@@ -163,9 +167,11 @@ The site's accent cannot be used inside the band. Add a band-scoped token
 it only there. Document why it exists so it is not mistaken for a second
 brand colour.
 
-**Layout:** three columns desktop; stacked with hairline rules between on
-mobile. Figures set in Lora at `--text-3xl` or larger; labels in Work Sans
-at `--text-xs` with `--tracking-meta`, uppercase.
+**Type:** figures in Lora, sized at least as large as `.story__fact-figure`'s
+`clamp(1.75rem, 3.5vw, 2.5rem)` — this band is the page's punch, so it should
+read larger than the About equivalent. Labels in Work Sans at `--text-xs`.
+Roles in Work Sans, separated by hairline rules in bisque at low alpha (not
+`--rule-hairline`, which is forest-tinted and invisible on forest).
 
 ## 3. Two doors
 
