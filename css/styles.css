@@ -1487,6 +1487,15 @@ main {
       minmax(0, 0.82fr);
     align-items: stretch;
     min-height: 76vh;
+
+    /* The tablet rule above sets both of these on .hero__grid. Left
+       uncleared they'd cascade in here too: padding-inline shrinks the
+       box col1's calc measures its 100% against, so the gutter comes out
+       too narrow to line .hero__body up with .container and the media
+       column falls short of the right edge; column-gap then displaces
+       col2 by a further 50px on top of that. */
+    padding-inline: 0;
+    column-gap: 0;
   }
 
   .hero__body {
