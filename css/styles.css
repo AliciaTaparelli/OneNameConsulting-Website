@@ -102,9 +102,8 @@
   --wordmark-size: 23px;   /* wordmark HEIGHT; width follows its 2.94:1 ratio */
 
   /* Section rhythm — phone values.
-     --section-padding is the landing-page rhythm;
-     --section-padding-lg is the roomier interior-page rhythm. */
-  --section-padding: var(--space-xl);
+     --section-padding-lg is the interior-page rhythm; the landing page
+     sets its own padding per section instead of drawing from a token. */
   --section-padding-lg: var(--space-2xl);
 
   /* Pattern accents. Opacity and height are the two things worth tweaking,
@@ -396,9 +395,11 @@ main {
   pointer-events: none;
 }
 
-/* A field behind the whole hero rather than a shape beside it. The radial
-   mask concentrates it in the top-right corner and lets it fall away to
-   nothing across the rest, so the bisque stays clean where the type sits. */
+/* A field behind the whole hero, not just the type side. The radial mask
+   concentrates it in the top-right corner, which the split layout's
+   photograph now covers, and lets it fall away to nothing moving left —
+   so it stays faintly present behind the headline without competing with
+   it. */
 .pattern-accent--hero {
   inset: 0;
   -webkit-mask-image: radial-gradient(115% 95% at 100% 0%,
@@ -1219,8 +1220,20 @@ main {
   color: var(--color-text-muted);
 }
 
+/* Inline link inside body copy. */
+.link {
+  color: var(--color-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-accent);
+}
+
 /* --------------------------------------------------------------------------
-   13a. Proof band — the one dark surface on the site
+   13c. Proof band — the one dark surface on the site
    Full-bleed forest. Because the base accent measures 2.03:1 here, everything
    inside uses the reversed-out tokens; see the token block for why.
    -------------------------------------------------------------------------- */
@@ -1279,20 +1292,8 @@ main {
   border-bottom: 1px solid var(--rule-on-primary);
 }
 
-/* Inline link inside body copy. */
-.link {
-  color: var(--color-primary);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-  transition: color var(--transition-fast);
-}
-
-.link:hover {
-  color: var(--color-accent);
-}
-
 /* --------------------------------------------------------------------------
-   13b. Doors — the two ways into the practice, equal weight
+   13d. Doors — the two ways into the practice, equal weight
    -------------------------------------------------------------------------- */
 
 .doors {
@@ -1333,6 +1334,7 @@ main {
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--color-primary);
+  text-wrap: balance;
 }
 
 .door__text {
@@ -1342,7 +1344,7 @@ main {
 }
 
 /* --------------------------------------------------------------------------
-   13c. Showcase — full-bleed evidence band
+   13e. Showcase — full-bleed evidence band
    With no testimonials available, this photograph is the page's only proof
    that Lisette works at the level being sold to. Cropped rather than letter-
    boxed so it reads as a band; object-position keeps the faces in frame.
@@ -1459,7 +1461,6 @@ main {
   :root {
     --container-gutter: var(--space-xl);
     --nav-gap: var(--space-lg);
-    --section-padding: var(--space-2xl);
     --section-padding-lg: var(--space-3xl);
     --pattern-opacity: 0.07;
     --pattern-divider-h: 72px;
@@ -1586,7 +1587,6 @@ main {
     --nav-gap: var(--space-xl);
     --logo-size: 44px;
     --wordmark-size: 28px;
-    --section-padding: var(--space-3xl);
     --section-padding-lg: var(--space-4xl);
     --pattern-opacity: 0.09;
     --pattern-divider-h: 88px;
