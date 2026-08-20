@@ -1342,6 +1342,24 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13c. Showcase — full-bleed evidence band
+   With no testimonials available, this photograph is the page's only proof
+   that Lisette works at the level being sold to. Cropped rather than letter-
+   boxed so it reads as a band; object-position keeps the faces in frame.
+   -------------------------------------------------------------------------- */
+
+.showcase {
+  margin-top: var(--section-padding-lg);
+}
+
+.showcase img {
+  width: 100%;
+  height: clamp(220px, 34vw, 440px);
+  object-fit: cover;
+  object-position: center 32%;
+}
+
+/* --------------------------------------------------------------------------
    13b. Footer
 
    The pattern band is the closing flourish and lives here rather than being
