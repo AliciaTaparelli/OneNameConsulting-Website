@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | OneName Consulting</title>
+  <meta name="description" content="Get in touch with Lisette van Eenennaam for executive coaching or compliance and governance advisory. Based in Switzerland, working with leaders and organizations worldwide.">
+
+  <link rel="canonical" href="https://onenameconsulting.com/contact/">
+
+  <!-- Open Graph / social. Absolute og:url and og:image are added by
+       tools/set-domain.py once the client's domain is known. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OneName Consulting">
+  <meta property="og:title" content="Contact | OneName Consulting">
+  <meta property="og:description" content="Get in touch with Lisette van Eenennaam for executive coaching or compliance and governance advisory. Based in Switzerland, working with leaders and organizations worldwide.">
+  <meta property="og:url" content="https://onenameconsulting.com/contact/">
+  <meta property="og:image" content="https://onenameconsulting.com/assets/images/og-image.jpg">
+  <meta property="og:locale" content="en">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://onenameconsulting.com/assets/images/og-image.jpg">
+  <meta name="twitter:title" content="Contact | OneName Consulting">
+  <meta name="twitter:description" content="Get in touch with Lisette van Eenennaam for executive coaching or compliance and governance advisory. Based in Switzerland, working with leaders and organizations worldwide.">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "name": "OneName Consulting",
+      "description": "Executive coaching and compliance advisory for leaders navigating complex regulatory and organizational change. 20+ years of global legal, compliance and leadership experience.",
+      "email": "OnenameConsulting@outlook.com",
+      "sameAs": [
+        "https://www.linkedin.com/in/lisette-v-2ba2059/"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CH"
+      },
+      "areaServed": "Worldwide",
+      "knowsLanguage": [
+        "nl",
+        "en",
+        "de",
+        "fr"
+      ]
+    },
+    {
+      "@type": "ContactPage",
+      "name": "Contact OneName Consulting",
+      "url": "https://onenameconsulting.com/contact/"
+    }
+  ]
+}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <!-- Set before first paint so the mobile menu never flashes open. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="header">
+    <nav class="nav" aria-label="Primary">
+      <a class="logo" href="../" aria-label="OneName Consulting, home">
+        <img class="logo__mark" fetchpriority="high" decoding="async" src="../assets/images/onename-mark.png" alt="" width="81" height="44">
+        <img class="logo__wordmark" src="../assets/images/onename-wordmark.png" alt="OneName Consulting" width="82" height="28">
+      </a>
+
+      <button class="nav__toggle" type="button" aria-expanded="false"
+              aria-controls="nav-menu" aria-label="Open menu">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <ul class="nav__links" id="nav-menu">
+        <li><a href="../" class="nav__link">Home</a></li>
+        <li><a href="../business-coaching/" class="nav__link">Business Coaching</a></li>
+        <li><a href="../consultancy-advisory/" class="nav__link">Consultancy &amp; Advisory</a></li>
+        <li><a href="../about/" class="nav__link">About</a></li>
+        <li><a href="../contact/" class="nav__link active" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="pattern-accent pattern-accent--hero" aria-hidden="true"></div>
+
+      <div class="container">
+        <p class="eyebrow">Contact</p>
+
+        <h1 class="page-hero__title">
+          Start a conversation
+        </h1>
+
+        <p class="page-hero__subtitle">
+          Tell me what you are working through and what you would like to
+          change. Every engagement begins with a conversation, and there is no
+          cost or obligation attached to the first one.
+        </p>
+      </div>
+    </section>
+
+    <!-- Form and direct contact -->
+    <section class="section">
+      <div class="container contact-grid">
+
+        <div class="contact-form-column">
+          <h2 class="section__title">Send a message</h2>
+
+          <noscript>
+            <p class="form__note">
+              This form needs JavaScript to send. Please write to
+              <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+              instead.
+            </p>
+          </noscript>
+
+          <!-- Wiring this form up takes two values, both set on the <form> tag:
+
+               data-endpoint            the URL that receives the POST, from
+                                        whichever form backend is chosen
+               data-recaptcha-site-key  the reCAPTCHA v2 site key
+
+               A site key is public and belongs in this file. The matching
+               SECRET key is not — it never goes in this repo. It is pasted
+               into the form backend's own settings, where it verifies the
+               token server side.
+
+               While either value is blank the form refuses to send and shows
+               the email address instead, so no enquiry is quietly lost. -->
+          <form class="form" id="contact-form" method="post" novalidate
+                data-endpoint=""
+                data-recaptcha-site-key="">
+
+            <div class="form__field">
+              <label class="form__label" for="field-name">Your name</label>
+              <input class="form__input" id="field-name" name="name" type="text"
+                     autocomplete="name" required>
+            </div>
+
+            <div class="form__field">
+              <label class="form__label" for="field-email">Email address</label>
+              <input class="form__input" id="field-email" name="email" type="email"
+                     autocomplete="email" required>
+            </div>
+
+            <div class="form__field">
+              <label class="form__label" for="field-topic">What is this about?</label>
+              <select class="form__select" id="field-topic" name="topic">
+                <option value="Business coaching">Business coaching</option>
+                <option value="Consultancy &amp; advisory">Consultancy &amp; advisory</option>
+                <option value="Something else">Something else</option>
+              </select>
+            </div>
+
+            <div class="form__field">
+              <label class="form__label" for="field-message">Message</label>
+              <textarea class="form__textarea" id="field-message" name="message"
+                        rows="6" required></textarea>
+            </div>
+
+            <!-- Honeypot. Off-screen, hidden from assistive technology and
+                 skipped by the tab order, so no visitor can reach it. Bots
+                 fill every field they find; anything here means the sender is
+                 not a person and the message is refused. This check also runs
+                 client side only, so the receiving endpoint must reject a
+                 non-empty "website" too. -->
+            <div class="form__trap" aria-hidden="true">
+              <label for="field-website">Website</label>
+              <input id="field-website" name="website" type="text"
+                     tabindex="-1" autocomplete="off" data-trap>
+            </div>
+
+            <!-- Filled in by contact-form.js once a site key is configured.
+                 Until then Google is never contacted. -->
+            <div class="g-recaptcha form__recaptcha"></div>
+
+            <button class="btn btn--solid" type="submit">Send message</button>
+
+            <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <aside class="contact-details">
+          <h2 class="contact-details__title">Direct contact</h2>
+
+          <div class="contact-details__item">
+            <p class="contact-details__label">Email</p>
+            <p class="contact-details__value">
+              <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+            </p>
+          </div>
+
+          <div class="contact-details__item">
+            <p class="contact-details__label">LinkedIn</p>
+            <p class="contact-details__value">
+              <a class="link" href="https://www.linkedin.com/in/lisette-v-2ba2059/">Lisette van Eenennaam</a>
+            </p>
+          </div>
+
+          <div class="contact-details__item">
+            <p class="contact-details__label">Based in</p>
+            <p class="contact-details__value">Switzerland, working worldwide</p>
+          </div>
+
+          <div class="contact-details__item">
+            <p class="contact-details__label">Languages</p>
+            <p class="contact-details__value">Dutch, English and German fluently; French as a working language</p>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img class="footer__wordmark" loading="lazy" decoding="async" src="../assets/images/onename-wordmark.png"
+             alt="OneName Consulting" width="76" height="26">
+        <p class="footer__tagline">
+          Executive coaching and compliance advisory for leaders navigating
+          complex regulatory and organizational change.
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <h2 class="eyebrow">Pages</h2>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="../">Home</a></li>
+          <li><a class="footer__link" href="../business-coaching/">Business Coaching</a></li>
+          <li><a class="footer__link" href="../consultancy-advisory/">Consultancy &amp; Advisory</a></li>
+          <li><a class="footer__link" href="../about/">About</a></li>
+          <li><a class="footer__link" href="../contact/" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <h2 class="eyebrow">Contact</h2>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a></li>
+          <li><a class="footer__link" href="https://www.linkedin.com/in/lisette-v-2ba2059/">LinkedIn</a></li>
+        </ul>
+      </div>
+
+      <p class="footer__legal">
+        <span>&copy; 2026 OneName Consulting. All rights reserved.</span>
+        <img class="footer__flag" loading="lazy" decoding="async" src="../assets/images/pride-flag.svg"
+             alt="Pride flag" width="21" height="14">
+      </p>
+    </div>
+
+    <div class="pattern-divider" aria-hidden="true"></div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/contact-form.js"></script>
+</body>
+</html>

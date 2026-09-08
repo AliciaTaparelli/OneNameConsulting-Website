@@ -1380,6 +1380,183 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13f. Contact — enquiry form and details rail
+
+   Fields are ruled, not boxed. The site has no filled surfaces anywhere else
+   and a form is the easiest place to accidentally introduce one, so an input
+   here is a label over a hairline and nothing more. Only the three text sizes
+   are used, as everywhere else.
+   -------------------------------------------------------------------------- */
+
+.contact-grid {
+  display: grid;
+  gap: var(--space-3xl);
+}
+
+.contact-form-column,
+.form {
+  min-width: 0;
+}
+
+.form {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+  max-width: var(--measure);
+}
+
+.form__field {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.form__label {
+  font-size: var(--text-s);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.form__input,
+.form__select,
+.form__textarea {
+  width: 100%;
+  padding: var(--space-sm) 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-s);
+  line-height: 1.6;
+  transition: border-color var(--transition-fast);
+}
+
+.form__input:hover,
+.form__select:hover,
+.form__textarea:hover {
+  border-bottom-color: var(--color-primary);
+}
+
+.form__input:focus-visible,
+.form__select:focus-visible,
+.form__textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* The select keeps the native menu — a custom one would need a filled panel,
+   which the rest of the page does not have. Only the resting state is
+   restyled. */
+.form__select {
+  appearance: none;
+  padding-right: var(--space-lg);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 8px top 55%, right 3px top 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.form__textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+/* Honeypot. Off the canvas rather than display:none, because some bots skip
+   anything that is outright hidden but will still fill a field that is
+   technically rendered. aria-hidden and tabindex="-1" in the markup keep it
+   away from every real visitor. */
+.form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Google renders the widget at a fixed 304px, which is wider than the content
+   column on a 320px phone. Scaled down on small screens rather than allowed to
+   push the page sideways; the height is pinned to match, because a transform
+   leaves the layout box behind. Full size returns as soon as there is room. */
+.form__recaptcha {
+  width: 100%;
+  height: 70px;
+  overflow: hidden;
+  transform: scale(0.9);
+  transform-origin: left top;
+}
+
+.form__recaptcha:empty {
+  display: none;
+}
+
+/* The form is a grid, so a button would otherwise stretch the full column.
+   Buttons everywhere else on the site sit at their content width. */
+.form .btn {
+  justify-self: start;
+}
+
+.form__status:empty {
+  display: none;
+}
+
+.form__status {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-hairline);
+  font-size: var(--text-s);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.form__status--error {
+  color: var(--color-accent);
+}
+
+.form__status--success {
+  color: var(--color-primary);
+}
+
+.form__note {
+  margin-top: var(--space-lg);
+  font-size: var(--text-s);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.contact-details__title {
+  font-family: var(--font-display);
+  font-size: var(--text-m);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+}
+
+.contact-details__item {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-hairline);
+}
+
+.contact-details__label {
+  font-size: var(--text-s);
+  font-weight: 500;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.contact-details__value {
+  margin-top: var(--space-sm);
+  font-size: var(--text-s);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
    13b. Footer
 
    The pattern band is the closing flourish and lives here rather than being
@@ -1591,6 +1768,12 @@ main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--space-xl);
   }
+
+  .form__recaptcha {
+    height: auto;
+    overflow: visible;
+    transform: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1722,6 +1905,13 @@ main {
   .cta-banner__actions {
     flex-shrink: 0;
     padding-bottom: var(--space-sm);
+  }
+
+  /* Contact ----------------------------------------------------------------- */
+
+  .contact-grid {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: start;
   }
 
   /* Proof band -------------------------------------------------------------- */
