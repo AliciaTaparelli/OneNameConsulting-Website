@@ -3,8 +3,8 @@
 
    Art direction: editorial magazine, not corporate web. The page is carried
    by type, rule-work and whitespace; there are no filled cards, no drop
-   shadows and no radii to speak of. Colour stays the forest/bisque pairing
-   with terracotta used only as punctuation.
+   shadows and no radii to speak of. The ground is white; forest green does
+   the structural work and terracotta is used only as punctuation.
 
    Mobile first. Base rules are the phone layout; every media query is
    min-width and only ever adds. Breakpoints:
@@ -15,8 +15,9 @@
 
 /* --------------------------------------------------------------------------
    1. Design tokens
-   The neutral ramp is tinted toward the forest green rather than a flat grey,
-   so background, text and primary all read as one family. Sizing tokens hold
+   The ground is plain white; the neutral ramp above it is tinted toward the
+   forest green rather than a flat grey, so text and primary read as one
+   family against it. Sizing tokens hold
    their phone values here and are raised at each breakpoint.
    -------------------------------------------------------------------------- */
 
@@ -24,9 +25,9 @@
   /* Colour */
   --color-primary: #1B4332;         /* Forest Green */
   --color-primary-hover: #143528;
-  --color-on-primary: #F0EAE1;
-  --color-background: #F0EAE1;      /* Bisque White */
-  --color-surface: #FFFFFF;
+  --color-on-primary: #FFFFFF;
+  --color-background: #FFFFFF;      /* White */
+  --color-surface: #FAF9F7;         /* off-white, for any panel that needs to sit off the ground */
   --color-text: #16211C;
   --color-text-muted: #4A574F;
   --color-text-secondary: var(--color-text-muted);   /* alias */
@@ -35,15 +36,15 @@
   /* The one accent. Punctuation only — a turned word, a hovered rule, an
      index number. Never body copy, never a background, never meaning-bearing
      on its own. */
-  --color-accent: #A55232;          /* muted terracotta — 4.56:1 on bisque */
+  --color-accent: #9C4A2C;          /* muted terracotta — 6.12:1 on white */
 
   /* Reversed-out variants for the forest proof band. The band is the only
-     dark surface on the site, and the base accent measures 2.03:1 on forest —
+     dark surface on the site, and the base accent measures 1.81:1 on forest —
      far below the 4.5:1 floor — so it cannot be used there. These three exist
      for that band alone and are not a second brand palette. */
   --color-on-primary-muted: #B8B5AE;   /* 5.41:1 on forest */
   --color-accent-on-primary: #D8977E;  /* base accent lightened 25%, 4.56:1 */
-  --rule-on-primary: rgba(240, 234, 225, 0.24);
+  --rule-on-primary: rgba(255, 255, 255, 0.24);
 
   /* Rule-work does most of the structural work now that cards are gone. */
   --rule-hairline: rgba(27, 67, 50, 0.18);
