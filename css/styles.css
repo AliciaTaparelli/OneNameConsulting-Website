@@ -656,10 +656,16 @@ main {
    -------------------------------------------------------------------------- */
 
 .about-header {
+  position: relative;
+  overflow: hidden;
   padding-block: var(--section-padding-lg) var(--space-3xl);
 }
 
+/* Same dot field the landing hero uses, so the two openings rhyme. It sits
+   behind the grid, masked into the top-right corner where the portrait is. */
 .about-header__grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: var(--space-xl);
 }
