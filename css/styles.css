@@ -1649,6 +1649,50 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13g. Social marks
+
+   LinkedIn's own bug stands in for the word. The black lockup is used rather
+   than LinkedIn blue: the site carries one accent colour and a second brand
+   blue would fight it. Black is one of the marks LinkedIn permits, so the
+   logo is still used as issued and is never recoloured to the site palette.
+   The word "LinkedIn" survives as alt text, which is what a screen reader
+   announces and what gives the link its name.
+   -------------------------------------------------------------------------- */
+
+.social-bug {
+  display: block;
+  width: auto;
+  height: 1.5rem;
+}
+
+/* Sits in the footer list beside the text links. The sliding underline the
+   other links carry is dropped — a rule under a logo reads as an artefact,
+   not as a hover state — so opacity does that job instead. Padding lifts the
+   target past the 24px minimum without opening a gap in the list. */
+.footer__link--logo {
+  display: inline-flex;
+  align-items: center;
+  padding-block: var(--space-xs);
+  opacity: 0.82;
+  transition: opacity var(--transition-fast);
+}
+
+.footer__link--logo::after {
+  content: none;
+}
+
+.footer__link--logo:hover,
+.footer__link--logo:focus-visible {
+  opacity: 1;
+}
+
+/* In the contact rail the mark replaces a label, so it is set to the height
+   of the uppercase labels around it rather than to link size. */
+.contact-details__label .social-bug {
+  height: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
    14. Tablet — 481px and up
    -------------------------------------------------------------------------- */
 
