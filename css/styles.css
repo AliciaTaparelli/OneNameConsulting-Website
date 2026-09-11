@@ -1402,6 +1402,11 @@ main {
   min-width: 0;
 }
 
+/* A single section numbered 01 is a count of nothing. */
+.contact-form-column .section__title::before {
+  content: none;
+}
+
 .form {
   display: grid;
   gap: var(--space-xl);
