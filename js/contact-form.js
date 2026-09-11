@@ -1,19 +1,12 @@
 /* OneName Consulting — contact form
 
-   Two filters run before a message is sent:
+   Sends the form in the background to contact/process.php, which emails it
+   from the site's own server, and reports the outcome under the button.
 
-   1. A honeypot field that no visitor can see, tab to or hear. Bots fill
-      every input they find, so anything in it means the sender is not a
-      person and the message is refused.
-   2. Google reCAPTCHA v2. The widget and Google's script are injected only
-      once a site key is configured, so an unconfigured page never contacts
-      Google at all.
-
-   Both filters live in the browser, which means both can be walked past by
-   anything that ignores this file and posts straight to the endpoint. They
-   are the first line, not the only one: whatever backend receives the POST
-   must verify the reCAPTCHA token with its own secret key and reject a
-   non-empty "website" field as well.                                        */
+   The hidden trap field is checked here so a bot's message goes no further,
+   but anything can post straight to process.php without loading this file.
+   So the server checks the trap again and does the real validation and rate
+   limiting. This file is the courtesy; process.php is the guard.          */
 
 (function () {
   "use strict";
@@ -28,29 +21,14 @@
   var button = form.querySelector("button[type=submit]");
   var trap = form.querySelector("[data-trap]");
   var endpoint = form.getAttribute("data-endpoint");
-  var siteKey = form.getAttribute("data-recaptcha-site-key");
 
   var MAILTO = "OnenameConsulting@outlook.com";
+  var FAILED = "Something went wrong sending this. Please write to " +
+    MAILTO + " instead.";
 
   function say(message, kind) {
     status.textContent = message;
     status.className = "form__status form__status--" + kind;
-  }
-
-  // The widget is rendered by Google's own script, which is why the key is
-  // set here rather than in the markup: no key, no request to Google.
-  if (siteKey) {
-    var slot = form.querySelector(".g-recaptcha");
-
-    if (slot) {
-      slot.setAttribute("data-sitekey", siteKey);
-
-      var script = document.createElement("script");
-      script.src = "https://www.google.com/recaptcha/api.js";
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-    }
   }
 
   form.addEventListener("submit", function (event) {
@@ -66,21 +44,6 @@
       return;
     }
 
-    // Nothing has been wired up yet. Say so plainly rather than accepting a
-    // message that would go nowhere.
-    if (!endpoint) {
-      say("This form is not connected yet. Please write to " + MAILTO +
-          " and your message will reach me directly.", "error");
-      return;
-    }
-
-    if (siteKey) {
-      if (!window.grecaptcha || !window.grecaptcha.getResponse()) {
-        say("Please confirm you are not a robot before sending.", "error");
-        return;
-      }
-    }
-
     button.disabled = true;
     say("Sending…", "pending");
 
@@ -89,21 +52,24 @@
       body: new FormData(form),
       headers: { Accept: "application/json" }
     }).then(function (response) {
-      if (!response.ok) {
-        throw new Error("Endpoint returned " + response.status);
-      }
-
+      // Only process.php's own confirmation counts as sent. A host without
+      // PHP can answer 200 with the script's source, which is not a sent
+      // message. A refusal from process.php carries a message worth showing.
+      return response.json().catch(function () {
+        return {};
+      }).then(function (reply) {
+        if (!response.ok || reply.sent !== true) {
+          var refused = new Error("Not sent (" + response.status + ")");
+          refused.reason = reply.message;
+          throw refused;
+        }
+      });
+    }).then(function () {
       form.reset();
-
-      if (window.grecaptcha) {
-        window.grecaptcha.reset();
-      }
-
       say("Thank you — your message has been sent. I will come back to " +
           "you shortly.", "success");
-    }).catch(function () {
-      say("Something went wrong sending this. Please write to " + MAILTO +
-          " instead.", "error");
+    }).catch(function (error) {
+      say(error.reason || FAILED, "error");
     }).then(function () {
       button.disabled = false;
     });

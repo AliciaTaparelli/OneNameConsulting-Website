@@ -1486,22 +1486,6 @@ main {
   overflow: hidden;
 }
 
-/* Google renders the widget at a fixed 304px, which is wider than the content
-   column on a 320px phone. Scaled down on small screens rather than allowed to
-   push the page sideways; the height is pinned to match, because a transform
-   leaves the layout box behind. Full size returns as soon as there is room. */
-.form__recaptcha {
-  width: 100%;
-  height: 70px;
-  overflow: hidden;
-  transform: scale(0.9);
-  transform-origin: left top;
-}
-
-.form__recaptcha:empty {
-  display: none;
-}
-
 /* The form is a grid, so a button would otherwise stretch the full column.
    Buttons everywhere else on the site sit at their content width. */
 .form .btn {
@@ -1820,12 +1804,6 @@ main {
   .proof__figures {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--space-xl);
-  }
-
-  .form__recaptcha {
-    height: auto;
-    overflow: visible;
-    transform: none;
   }
 }
 

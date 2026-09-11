@@ -130,33 +130,24 @@
             </p>
           </noscript>
 
-          <!-- Wiring this form up takes two values, both set on the <form> tag:
-
-               data-endpoint            the URL that receives the POST, from
-                                        whichever form backend is chosen
-               data-recaptcha-site-key  the reCAPTCHA v2 site key
-
-               A site key is public and belongs in this file. The matching
-               SECRET key is not — it never goes in this repo. It is pasted
-               into the form backend's own settings, where it verifies the
-               token server side.
-
-               While either value is blank the form refuses to send and shows
-               the email address instead, so no enquiry is quietly lost. -->
+          <!-- Sent in the background by contact-form.js to process.php in this
+               folder, which emails it from the site's own server. That needs
+               hosting that runs PHP. Wherever it cannot run, the visitor is
+               shown the email address instead, so no enquiry is quietly lost.
+               The maxlength values match the limits in process.php. -->
           <form class="form" id="contact-form" method="post" novalidate
-                data-endpoint=""
-                data-recaptcha-site-key="">
+                data-endpoint="process.php">
 
             <div class="form__field">
               <label class="form__label" for="field-name">Your name</label>
               <input class="form__input" id="field-name" name="name" type="text"
-                     autocomplete="name" required>
+                     autocomplete="name" maxlength="200" required>
             </div>
 
             <div class="form__field">
               <label class="form__label" for="field-email">Email address</label>
               <input class="form__input" id="field-email" name="email" type="email"
-                     autocomplete="email" required>
+                     autocomplete="email" maxlength="254" required>
             </div>
 
             <div class="form__field">
@@ -171,24 +162,19 @@
             <div class="form__field">
               <label class="form__label" for="field-message">Message</label>
               <textarea class="form__textarea" id="field-message" name="message"
-                        rows="6" required></textarea>
+                        rows="6" maxlength="5000" required></textarea>
             </div>
 
             <!-- Honeypot. Off-screen, hidden from assistive technology and
                  skipped by the tab order, so no visitor can reach it. Bots
                  fill every field they find; anything here means the sender is
-                 not a person and the message is refused. This check also runs
-                 client side only, so the receiving endpoint must reject a
-                 non-empty "website" too. -->
+                 not a person. contact-form.js refuses the message, and
+                 process.php checks again for bots that skip the page. -->
             <div class="form__trap" aria-hidden="true">
               <label for="field-website">Website</label>
               <input id="field-website" name="website" type="text"
                      tabindex="-1" autocomplete="off" data-trap>
             </div>
-
-            <!-- Filled in by contact-form.js once a site key is configured.
-                 Until then Google is never contacted. -->
-            <div class="g-recaptcha form__recaptcha"></div>
 
             <button class="btn btn--solid" type="submit">Send message</button>
 
