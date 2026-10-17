@@ -118,6 +118,7 @@
      over the densest dots, so type sits on it cleanly. */
   --pattern-opacity: 0.04;          /* hero field — phone */
   --pattern-opacity-section: 0.12;  /* section accent */
+  --pattern-opacity-cta: 0.07;      /* closing CTA field — phone */
   --pattern-divider-h: 56px;        /* full-opacity closing band */
 }
 
@@ -890,10 +891,31 @@ main {
    -------------------------------------------------------------------------- */
 
 .cta-banner {
+  position: relative;
+  overflow: hidden;
   padding-block: var(--space-3xl);
   border-top: 1px solid var(--rule-strong);
   background: none;
   color: var(--color-text);
+}
+
+.cta-banner > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* The closing page keeps its air: the dotted field sits in the empty right
+   half only, faded out before it reaches the type. Its own artwork, so the
+   second piece reads as a companion to the hero rather than a repeat. */
+.pattern-accent--cta {
+  inset: 0;
+  background-image: url("../assets/images/pattern-cta.jpg");
+  background-position: right center;
+  opacity: var(--pattern-opacity-cta);
+  -webkit-mask-image: radial-gradient(52% 115% at 100% 50%,
+    #000 0%, rgba(0, 0, 0, 0.4) 42%, transparent 78%);
+  mask-image: radial-gradient(52% 115% at 100% 50%,
+    #000 0%, rgba(0, 0, 0, 0.4) 42%, transparent 78%);
 }
 
 .cta-banner__inner {
@@ -1560,6 +1582,13 @@ main {
   margin-top: var(--section-padding-lg);
 }
 
+/* The CTA already ends the page on air, so its own bottom padding is the
+   gap before the footer — the footer's top margin on top of it reads as a
+   hole. Pages that end on something else keep the margin. */
+main:has(> .cta-banner:last-child) + .footer {
+  margin-top: 0;
+}
+
 .footer__inner {
   display: grid;
   gap: var(--space-xl);
@@ -1695,6 +1724,7 @@ main {
     --nav-gap: var(--space-lg);
     --section-padding-lg: var(--space-3xl);
     --pattern-opacity: 0.07;
+    --pattern-opacity-cta: 0.08;
     --pattern-divider-h: 72px;
   }
 
@@ -1825,6 +1855,7 @@ main {
     --wordmark-size: 28px;
     --section-padding-lg: var(--space-4xl);
     --pattern-opacity: 0.09;
+    --pattern-opacity-cta: 0.09;
     --pattern-divider-h: 88px;
   }
 
@@ -1923,7 +1954,7 @@ main {
   /* CTA ------------------------------------------------------------------- */
 
   .cta-banner {
-    padding-block: var(--space-4xl);
+    padding-block: var(--space-4xl) var(--space-3xl);
   }
 
   .cta-banner__inner {
