@@ -1789,6 +1789,13 @@ main:has(> .cta-banner:last-child) + .footer {
     display: none;
   }
 
+  /* The logo already goes home, so the link is redundant once the menu is
+     open on the page. It stays in the collapsed phone menu, where there is
+     no such affordance to hand. */
+  .nav__item--home {
+    display: none;
+  }
+
   .nav__links,
   .js .nav__links {
     display: flex;
