@@ -759,6 +759,12 @@ main {
   margin-bottom: var(--space-xl);
 }
 
+/* Photographs set into the essay need air on both sides; the base figure
+   only carries a top margin, which leaves the next paragraph crowding it. */
+.story__text .feature-figure {
+  margin-bottom: var(--space-2xl);
+}
+
 .story__aside {
   display: grid;
   gap: var(--space-xl);
