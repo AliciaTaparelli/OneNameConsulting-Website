@@ -35,7 +35,13 @@ declare(strict_types=1);
    time.                                                                     */
 
 // Where messages are delivered.
-const TO_ADDRESS = 'OnenameConsulting@outlook.com';
+// TEMPORARY: pointed at a test inbox while the form is being checked. Put
+// OnenameConsulting@outlook.com back when the test is done.
+const TO_ADDRESS = 'ali.taparelli@gmail.com';
+
+// The address shown to visitors when sending fails. It stays the public one,
+// so a failed send never discloses where mail is really going.
+const PUBLIC_ADDRESS = 'OnenameConsulting@outlook.com';
 
 // The sender. It must be a real mailbox on the domain the site is hosted on,
 // or receiving servers treat the message as spoofed and file it as junk.
@@ -146,7 +152,7 @@ if (($_POST['website'] ?? '') !== '') {
     respond(200, 'Sent.');
 }
 
-$fallback = ' Please write to ' . TO_ADDRESS . ' instead.';
+$fallback = ' Please write to ' . PUBLIC_ADDRESS . ' instead.';
 
 $name = trim(preg_replace('/[\x00-\x1F\x7F]+/', ' ', field('name')));
 $email = field('email');
