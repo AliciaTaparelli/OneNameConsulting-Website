@@ -1240,6 +1240,12 @@ main {
   border: 1px solid var(--rule-hairline);
 }
 
+/* A supporting photograph rather than a plate: held to roughly half the
+   column so it sits under the text instead of competing with it. */
+.feature-figure--inset {
+  max-width: 420px;
+}
+
 .feature-figure__caption {
   margin-top: var(--space-md);
   font-size: var(--text-s);
