@@ -1011,8 +1011,13 @@ main {
   z-index: 1;
 }
 
+/* Carries the same dotted painting as the closing CTA on the home page, so
+   the two quiet fields on the site are the one piece of artwork. */
 .pattern-accent--frame {
   inset: 0;
+  background-image: url("../assets/images/pattern-cta.jpg");
+  background-position: right center;
+  opacity: var(--pattern-opacity-cta);
   -webkit-mask-image: radial-gradient(100% 110% at 100% 100%,
     #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 78%);
   mask-image: radial-gradient(100% 110% at 100% 100%,
