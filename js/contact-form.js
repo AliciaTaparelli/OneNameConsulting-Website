@@ -1,15 +1,12 @@
 /* OneName Consulting — contact form
 
-   Posts the form to Netlify Forms in the background and reports the outcome
-   under the button, so the visitor stays on the page instead of being sent
-   to Netlify's own confirmation screen.
+   Sends the form in the background to contact/process.php, which emails it
+   from the site's own server, and reports the outcome under the button.
 
-   Netlify takes the submission from any path on the site and matches it to
-   the form by the form-name field, which the page carries as a hidden input.
-   The body has to be url-encoded; a FormData body is read as a file upload.
-
-   Without this file the form still works: the browser posts it normally and
-   Netlify answers with its default confirmation page.                      */
+   The hidden trap field is checked here so a bot's message goes no further,
+   but anything can post straight to process.php without loading this file.
+   So the server checks the trap again and does the real validation and rate
+   limiting. This file is the courtesy; process.php is the guard.          */
 
 (function () {
   "use strict";
@@ -23,6 +20,7 @@
   var status = document.getElementById("form-status");
   var button = form.querySelector("button[type=submit]");
   var trap = form.querySelector("[data-trap]");
+  var endpoint = form.getAttribute("data-endpoint");
 
   var MAILTO = "OnenameConsulting@outlook.com";
   var FAILED = "Something went wrong sending this. Please write to " +
@@ -31,19 +29,6 @@
   function say(message, kind) {
     status.textContent = message;
     status.className = "form__status form__status--" + kind;
-  }
-
-  // Netlify reads the fields as a url-encoded body. URLSearchParams takes the
-  // name/value pairs straight from the form, including the hidden form-name.
-  function encode(data) {
-    var pairs = [];
-
-    data.forEach(function (value, key) {
-      pairs.push(encodeURIComponent(key) + "=" +
-        encodeURIComponent(String(value)));
-    });
-
-    return pairs.join("&");
   }
 
   form.addEventListener("submit", function (event) {
@@ -62,20 +47,29 @@
     button.disabled = true;
     say("Sending…", "pending");
 
-    fetch("/", {
+    fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode(new FormData(form))
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
     }).then(function (response) {
-      if (!response.ok) {
-        throw new Error("Not sent (" + response.status + ")");
-      }
-
+      // Only process.php's own confirmation counts as sent. A host without
+      // PHP can answer 200 with the script's source, which is not a sent
+      // message. A refusal from process.php carries a message worth showing.
+      return response.json().catch(function () {
+        return {};
+      }).then(function (reply) {
+        if (!response.ok || reply.sent !== true) {
+          var refused = new Error("Not sent (" + response.status + ")");
+          refused.reason = reply.message;
+          throw refused;
+        }
+      });
+    }).then(function () {
       form.reset();
       say("Thank you — your message has been sent. I will come back to " +
           "you shortly.", "success");
-    }).catch(function () {
-      say(FAILED, "error");
+    }).catch(function (error) {
+      say(error.reason || FAILED, "error");
     }).then(function () {
       button.disabled = false;
     });

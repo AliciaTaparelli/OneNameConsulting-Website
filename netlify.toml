@@ -1,5 +1,0 @@
-# Netlify build settings. The site is plain HTML, so there is nothing to
-# build: the repository root is published as it stands.
-[build]
-  publish = "."
-  command = ""

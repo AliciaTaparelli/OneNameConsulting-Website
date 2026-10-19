@@ -122,22 +122,21 @@
         <div class="contact-form-column">
           <h2 class="section__title">Send a Message</h2>
 
-          <!-- Handled by Netlify Forms. Netlify reads this form out of the
-               deployed HTML, so it must stay in the page as markup rather
-               than be built by script. contact-form.js posts it in the
-               background and reports the outcome under the button; without
-               JavaScript the browser posts it normally and Netlify answers
-               with its own confirmation page. Submissions appear under Forms
-               in the Netlify dashboard, which is also where the notification
-               email address is set. -->
-          <form class="form" id="contact-form" name="contact" method="POST" novalidate
-                data-netlify="true" netlify-honeypot="website">
+          <noscript>
+            <p class="form__note">
+              This form needs JavaScript to send. Please write to
+              <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+              instead.
+            </p>
+          </noscript>
 
-            <!-- Netlify matches a submission to this form by name. The build
-                 injects this field for plain form posts; it is written out
-                 here as well because contact-form.js sends the form itself
-                 and has to include it in the body. -->
-            <input type="hidden" name="form-name" value="contact">
+          <!-- Sent in the background by contact-form.js to process.php in this
+               folder, which emails it from the site's own server. That needs
+               hosting that runs PHP. Wherever it cannot run, the visitor is
+               shown the email address instead, so no enquiry is quietly lost.
+               The maxlength values match the limits in process.php. -->
+          <form class="form" id="contact-form" method="post" novalidate
+                data-endpoint="process.php">
 
             <div class="form__field">
               <label class="form__label" for="field-name">Your name</label>
@@ -170,8 +169,7 @@
                  skipped by the tab order, so no visitor can reach it. Bots
                  fill every field they find; anything here means the sender is
                  not a person. contact-form.js refuses the message, and
-                 Netlify discards anything that arrives with this field set,
-                 which is what netlify-honeypot names on the form above. -->
+                 process.php checks again for bots that skip the page. -->
             <div class="form__trap" aria-hidden="true">
               <label for="field-website">Website</label>
               <input id="field-website" name="website" type="text"
