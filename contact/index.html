@@ -122,21 +122,23 @@
         <div class="contact-form-column">
           <h2 class="section__title">Send a Message</h2>
 
-          <noscript>
-            <p class="form__note">
-              This form needs JavaScript to send. Please write to
-              <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
-              instead.
-            </p>
-          </noscript>
 
-          <!-- Sent in the background by contact-form.js to process.php in this
-               folder, which emails it from the site's own server. That needs
-               hosting that runs PHP. Wherever it cannot run, the visitor is
-               shown the email address instead, so no enquiry is quietly lost.
-               The maxlength values match the limits in process.php. -->
-          <form class="form" id="contact-form" method="post" novalidate
-                data-endpoint="process.php">
+          <!-- Handled by Web3Forms, which emails each submission to the
+               address the access key was registered with. No server of our
+               own is involved, so the site can sit on any static host.
+
+               contact-form.js posts it in the background and reports the
+               outcome under the button. Without JavaScript the browser posts
+               the form itself to the same endpoint and Web3Forms answers with
+               its own confirmation page, so an enquiry is never lost. -->
+          <form class="form" id="contact-form" method="POST" novalidate
+                action="https://api.web3forms.com/submit">
+
+            <!-- The key says which inbox Web3Forms delivers to. It is public
+                 by design: it only permits sending to that one address. -->
+            <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY_HERE">
+            <input type="hidden" name="subject" value="Website enquiry — onenameconsulting.com">
+            <input type="hidden" name="from_name" value="OneName Consulting website">
 
             <div class="form__field">
               <label class="form__label" for="field-name">Your name</label>
@@ -165,16 +167,18 @@
                         rows="6" maxlength="5000" required></textarea>
             </div>
 
-            <!-- Honeypot. Off-screen, hidden from assistive technology and
-                 skipped by the tab order, so no visitor can reach it. Bots
-                 fill every field they find; anything here means the sender is
-                 not a person. contact-form.js refuses the message, and
-                 process.php checks again for bots that skip the page. -->
+            <!-- Honeypots. Both are hidden from people: off-screen, out of the
+                 tab order and hidden from assistive technology. Bots fill every
+                 field they find. contact-form.js refuses anything with the
+                 first one set, and Web3Forms discards anything with botcheck
+                 set, which is the name it looks for. -->
             <div class="form__trap" aria-hidden="true">
               <label for="field-website">Website</label>
               <input id="field-website" name="website" type="text"
                      tabindex="-1" autocomplete="off" data-trap>
             </div>
+            <input type="checkbox" name="botcheck" style="display: none;"
+                   tabindex="-1" aria-hidden="true">
 
             <button class="btn btn--solid" type="submit">Send message</button>
 
