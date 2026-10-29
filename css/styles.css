@@ -924,7 +924,13 @@ main {
 .page-hero {
   position: relative;
   overflow: hidden;
-  padding-block: var(--section-padding-lg);
+  padding-block: var(--section-padding-lg) var(--space-3xl);
+}
+
+/* The hero's own bottom padding already sets the page's first gap, so the
+   section under it starts closer than the rhythm between later sections. */
+.page-hero + .section {
+  padding-block-start: var(--space-2xl);
 }
 
 .page-hero > .container {
