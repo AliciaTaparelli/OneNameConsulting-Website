@@ -1921,9 +1921,9 @@ main:has(> .cta-banner:last-child) + .footer {
         calc((100% - var(--container-max)) / 2 + var(--container-gutter))
       )
       minmax(0, 1fr)
-      minmax(0, 0.62fr);
+      minmax(0, 0.56fr);
     align-items: stretch;
-    min-height: 66vh;
+    min-height: 62vh;
 
     /* The tablet rule above sets both of these on .hero__grid. Left
        uncleared they'd cascade in here too: padding-inline shrinks the
@@ -1945,12 +1945,20 @@ main:has(> .cta-banner:last-child) + .footer {
   .hero__media {
     order: 0;
     grid-column: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-inline-end: var(--container-gutter);
   }
 
+  /* The same frame the about page gives its portrait, so the two read as
+     one pair rather than two different treatments. */
   .hero__media img {
-    aspect-ratio: auto;
-    height: 100%;
-    object-position: center top;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-position: center 20%;
   }
 
   /* About header ---------------------------------------------------------- */
