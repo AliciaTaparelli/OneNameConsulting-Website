@@ -1239,14 +1239,6 @@ main {
 }
 
 
-/* The button opens a mail client, which plenty of visitors do not have
-   configured. This keeps the address readable and copyable regardless. */
-.cta-banner__fallback {
-  margin-top: var(--space-md);
-  font-size: var(--text-s);
-  color: var(--color-text-muted);
-}
-
 /* Inline link inside body copy. */
 .link {
   color: var(--color-primary);
