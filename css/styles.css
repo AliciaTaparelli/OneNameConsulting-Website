@@ -1921,9 +1921,9 @@ main:has(> .cta-banner:last-child) + .footer {
         calc((100% - var(--container-max)) / 2 + var(--container-gutter))
       )
       minmax(0, 1fr)
-      minmax(0, 0.82fr);
+      minmax(0, 0.62fr);
     align-items: stretch;
-    min-height: 76vh;
+    min-height: 66vh;
 
     /* The tablet rule above sets both of these on .hero__grid. Left
        uncleared they'd cascade in here too: padding-inline shrinks the
