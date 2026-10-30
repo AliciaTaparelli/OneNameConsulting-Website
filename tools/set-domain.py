@@ -14,6 +14,8 @@ PAGES = {
     "about/index.html": "about/",
     "business-coaching/index.html": "business-coaching/",
     "consultancy-advisory/index.html": "consultancy-advisory/",
+    "privacy/index.html": "privacy/",
+    "terms/index.html": "terms/",
 }
 # Rough relative priority, and how often each page is likely to change.
 META = {"": ("1.0", "monthly"), "about/": ("0.8", "yearly"),

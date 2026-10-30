@@ -916,6 +916,82 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13b. Legal pages
+
+   Privacy policy and terms: continuous prose with headings, read once rather
+   than scanned. Held to the reading measure, with headings that carry no
+   section number since these pages sit outside the numbered rhythm.
+   -------------------------------------------------------------------------- */
+
+.legal {
+  max-width: 68ch;
+}
+
+.legal__meta {
+  font-size: var(--text-s);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.legal h2 {
+  margin-top: var(--space-2xl);
+  font-family: var(--font-display);
+  font-size: var(--text-m);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+}
+
+.legal h3 {
+  margin-top: var(--space-lg);
+  font-size: var(--text-s);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.legal p,
+.legal li {
+  margin-top: var(--space-md);
+  font-size: var(--text-s);
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.legal ul {
+  margin-top: var(--space-md);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.legal li {
+  position: relative;
+  padding-left: var(--space-lg);
+}
+
+.legal li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9em;
+  width: 12px;
+  height: 1px;
+  background-color: var(--color-accent);
+}
+
+.legal strong {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* The operator's details: an address block, so the lines stay as set. */
+.legal__block {
+  margin-top: var(--space-md);
+  line-height: 1.9;
+}
+
+/* --------------------------------------------------------------------------
    13a. Interior page furniture
    Shared by the service pages, so a second one costs no new CSS.
    -------------------------------------------------------------------------- */
@@ -1633,6 +1709,14 @@ main:has(> .cta-banner:last-child) + .footer {
 /* Sits at cap height with the legal line rather than shouting: it is a signal,
    not a badge. Slightly held back so the six stripes do not out-saturate a
    palette that is otherwise bisque and green. */
+/* The two legal links sit with the copyright line rather than in the page
+   list: they are obligations, not part of the site's navigation. */
+.footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
 .footer__flag {
   flex: none;
   height: 14px;
