@@ -107,7 +107,7 @@
   /* Section rhythm — phone values.
      --section-padding-lg is the interior-page rhythm; the landing page
      sets its own padding per section instead of drawing from a token. */
-  --section-padding-lg: var(--space-2xl);
+  --section-padding-lg: var(--space-xl);
 
   /* Pattern accents. Opacity and height are the two things worth tweaking,
      so they live here rather than in the rules below. */
@@ -1697,7 +1697,7 @@ main:has(> .cta-banner:last-child) + .footer {
   :root {
     --container-gutter: var(--space-xl);
     --nav-gap: var(--space-lg);
-    --section-padding-lg: var(--space-3xl);
+    --section-padding-lg: var(--space-2xl);
     --pattern-opacity: 0.07;
     --pattern-opacity-cta: 0.08;
     --pattern-divider-h: 72px;
@@ -1813,7 +1813,7 @@ main:has(> .cta-banner:last-child) + .footer {
     --nav-gap: var(--space-xl);
     --logo-size: 44px;
     --wordmark-size: 28px;
-    --section-padding-lg: var(--space-4xl);
+    --section-padding-lg: var(--space-3xl);
     --pattern-opacity: 0.09;
     --pattern-opacity-cta: 0.09;
     --pattern-divider-h: 88px;
@@ -1854,7 +1854,7 @@ main:has(> .cta-banner:last-child) + .footer {
   .hero__body {
     grid-column: 2;
     align-self: center;
-    padding-block: var(--space-3xl);
+    padding-block: var(--space-2xl);
     padding-inline: 0 var(--space-2xl);
   }
 
@@ -1915,7 +1915,7 @@ main:has(> .cta-banner:last-child) + .footer {
   /* CTA ------------------------------------------------------------------- */
 
   .cta-banner {
-    padding-block: var(--space-4xl) var(--space-3xl);
+    padding-block: var(--space-3xl) var(--space-2xl);
   }
 
   .cta-banner__inner {
@@ -1940,7 +1940,7 @@ main:has(> .cta-banner:last-child) + .footer {
   /* Proof band -------------------------------------------------------------- */
 
   .proof {
-    padding-block: var(--space-4xl);
+    padding-block: var(--space-3xl);
   }
 
   .proof__grid {
