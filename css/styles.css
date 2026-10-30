@@ -955,13 +955,11 @@ main {
   color: var(--color-text-muted);
 }
 
-/* Calendly sets its own height; this is the floor while it loads. */
-.scheduler__widget {
-  min-height: 680px;
-}
-
-/* With the widget in place the frame is the widget's own, not ours. */
-.scheduler--live {
+/* The provider sets its own height inside the frame; this is ours. */
+.scheduler__frame {
+  display: block;
+  width: 100%;
+  height: 680px;
   border: 0;
 }
 

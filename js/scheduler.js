@@ -1,28 +1,47 @@
 /* OneName Consulting — booking
 
-   Holds the place for a Calendly scheduler on the contact page.
+   Holds the place for a booking scheduler on the contact page, whichever
+   company ends up providing it.
 
-   To connect it, put the Calendly address on the container in
+   To connect one, put its booking address on the container in
    contact/index.html:
 
      <div class="scheduler" id="scheduler"
-          data-scheduler-url="https://calendly.com/your-name/30min">
+          data-scheduler-url="https://cal.com/lisette/30min">
 
-   With an address present this file loads Calendly's widget script and
-   builds the inline scheduler inside the container. With the attribute
-   empty it does nothing at all, and the fallback written into the page —
-   the email address and a button — stays where it is.
+   The page then shows that booking page in a frame inside the section, and
+   the email fallback written into the HTML is hidden. With the attribute
+   empty nothing is loaded and the fallback stands, so no third party is
+   contacted until an address is set.
 
-   Calendly's script is only fetched once an address is set, so until then
-   no third party is contacted and nothing is loaded from outside the site.
-   When it is set, remember that the privacy policy has to name Calendly
-   as a recipient, since booking sends a name and email address to them. */
+   A frame rather than the provider's own script: it works the same way for
+   every scheduler worth using (Cal.com, Calendly, TidyCal, SavvyCal,
+   Acuity, Microsoft Bookings, Google appointment pages, YouCanBook.me),
+   and it keeps their code out of this page, where it could otherwise read
+   anything on it.
+
+   HOSTS below is the list of providers the page will embed. Add the host
+   to it when the choice is made; an address on any other host is ignored,
+   so a mistyped attribute cannot frame something unexpected.
+
+   When a scheduler is connected, the privacy policy has to name the
+   provider as a recipient: booking sends a name and an email address to
+   them, and most are outside Switzerland.                                */
 
 (function () {
   "use strict";
 
-  var WIDGET_CSS = "https://assets.calendly.com/assets/external/widget.css";
-  var WIDGET_JS = "https://assets.calendly.com/assets/external/widget.js";
+  var HOSTS = [
+    "cal.com",
+    "calendly.com",
+    "tidycal.com",
+    "savvycal.com",
+    "app.squarespacescheduling.com",
+    "app.acuityscheduling.com",
+    "outlook.office365.com",
+    "calendar.google.com",
+    "youcanbook.me"
+  ];
 
   var container = document.getElementById("scheduler");
 
@@ -36,8 +55,6 @@
     return;
   }
 
-  // Only a Calendly address is accepted, so a mistyped attribute cannot
-  // pull in a script from somewhere else.
   var address;
 
   try {
@@ -46,40 +63,33 @@
     return;
   }
 
-  if (address.protocol !== "https:" || address.hostname !== "calendly.com") {
+  var host = address.hostname.replace(/^www\./, "");
+  var allowed = HOSTS.some(function (known) {
+    return host === known || host.endsWith("." + known);
+  });
+
+  if (address.protocol !== "https:" || !allowed) {
     return;
   }
 
+  var frame = document.createElement("iframe");
+
+  frame.className = "scheduler__frame";
+  frame.src = address.href;
+  frame.title = "Booking calendar";
+  frame.loading = "lazy";
+  frame.setAttribute("frameborder", "0");
+
+  // The frame may open the provider's own pages and ask for a payment sheet
+  // on a paid booking; it has no reason to reach anything else on this site.
+  frame.setAttribute(
+    "sandbox",
+    "allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+  );
+
   var fallback = container.querySelector(".scheduler__fallback");
-  var mount = document.createElement("div");
 
-  mount.className = "scheduler__widget";
-  container.appendChild(mount);
-
-  var styles = document.createElement("link");
-
-  styles.rel = "stylesheet";
-  styles.href = WIDGET_CSS;
-  document.head.appendChild(styles);
-
-  var script = document.createElement("script");
-
-  script.src = WIDGET_JS;
-  script.async = true;
-
-  script.addEventListener("load", function () {
-    if (!window.Calendly) {
-      return;
-    }
-
-    window.Calendly.initInlineWidget({
-      url: address.href,
-      parentElement: mount,
-      prefill: {},
-      utm: {}
-    });
-
-    // The widget is up, so the email fallback is no longer the way in.
+  frame.addEventListener("load", function () {
     if (fallback) {
       fallback.hidden = true;
     }
@@ -87,10 +97,10 @@
     container.classList.add("scheduler--live");
   });
 
-  // If the script cannot be reached, the fallback is still on the page.
-  script.addEventListener("error", function () {
-    mount.remove();
+  // If it cannot be reached, the email fallback is still on the page.
+  frame.addEventListener("error", function () {
+    frame.remove();
   });
 
-  document.head.appendChild(script);
+  container.appendChild(frame);
 })();
