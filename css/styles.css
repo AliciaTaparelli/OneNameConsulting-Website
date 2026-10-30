@@ -700,7 +700,7 @@ main {
 /* The portrait is not a photograph, and says so. */
 .about-header__credit {
   margin-top: var(--space-sm);
-  font-size: var(--text-s);
+  font-size: 0.75rem;
   letter-spacing: var(--tracking-meta);
   text-transform: uppercase;
   color: var(--color-text-muted);
