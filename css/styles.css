@@ -929,6 +929,43 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   13c. Booking
+
+   A frame that holds either the scheduler or, until one is connected, the
+   note and button that stand in for it. Same hairline as the other framed
+   blocks, so an empty-looking area still reads as part of the page.
+   -------------------------------------------------------------------------- */
+
+.scheduler {
+  margin-top: var(--space-2xl);
+  border: 1px solid var(--rule-hairline);
+}
+
+.scheduler__fallback {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-lg);
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.scheduler__note {
+  max-width: var(--measure);
+  font-size: var(--text-s);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+/* Calendly sets its own height; this is the floor while it loads. */
+.scheduler__widget {
+  min-height: 680px;
+}
+
+/* With the widget in place the frame is the widget's own, not ours. */
+.scheduler--live {
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
    13b. Legal pages
 
    Privacy policy and terms: continuous prose with headings, read once rather

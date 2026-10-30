@@ -222,6 +222,32 @@
       </div>
     </section>
 
+    <!-- Booking. The scheduler is not connected yet: js/scheduler.js looks
+         for a Calendly address on the container below and, finding none,
+         leaves the fallback in place. Put the address in data-scheduler-url
+         and the widget takes over, with nothing else to change. -->
+    <section class="section" id="book">
+      <div class="container">
+        <h2 class="section__title">Book a Conversation</h2>
+
+        <p class="lead">
+          Pick a time that suits you for a first conversation. Thirty minutes,
+          online, no cost or obligation.
+        </p>
+
+        <div class="scheduler" id="scheduler" data-scheduler-url="">
+          <div class="scheduler__fallback">
+            <p class="scheduler__note">
+              Online booking is being set up. In the meantime, write to
+              <a class="link" href="mailto:OnenameConsulting@outlook.com?subject=Conversation">OnenameConsulting@outlook.com</a>
+              with a couple of times that suit you and I will confirm one.
+            </p>
+            <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com?subject=Conversation">Suggest a time by email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">
@@ -276,5 +302,6 @@
 
   <script src="../js/main.js"></script>
   <script src="../js/contact-form.js"></script>
+  <script src="../js/scheduler.js"></script>
 </body>
 </html>
