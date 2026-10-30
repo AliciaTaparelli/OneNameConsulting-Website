@@ -115,7 +115,7 @@
       </div>
     </section>
 
-    <!-- Form and direct contact -->
+    <!-- Form, booking and direct contact -->
     <section class="section">
       <div class="container contact-grid">
 
@@ -187,65 +187,67 @@
           </form>
         </div>
 
-        <aside class="contact-details">
-          <h2 class="contact-details__title">Direct Contact</h2>
+        <div class="contact-booking-column">
+          <!-- Booking. No scheduler is connected yet: js/scheduler.js looks
+               for a booking address on the container below and, finding none,
+               leaves the fallback in place. Put the address in
+               data-scheduler-url and the booking page appears in a frame
+               here instead, whichever provider it belongs to. The providers
+               it will embed are listed in that file. -->
+          <div id="book">
+            <h2 class="section__title">Book a Conversation</h2>
 
-          <div class="contact-details__item">
-            <p class="contact-details__label">Email</p>
-            <p class="contact-details__value">
-              <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+            <p class="contact-booking__lead">
+              Or pick a time that suits you. Thirty minutes, online, no cost
+              or obligation.
             </p>
+
+            <div class="scheduler" id="scheduler" data-scheduler-url="">
+              <!-- Shown until a provider is connected: a picker that composes
+                   the request as an email rather than booking anything. The
+                   provider's own page replaces all of it. -->
+              <div class="scheduler__fallback" id="booking-picker">
+                <p class="scheduler__note">
+                  Pick a day and a time and I will confirm it by email. Times
+                  are Central European Time.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div class="contact-details__item">
-            <p class="contact-details__label">
-              <img class="social-bug" loading="lazy" decoding="async"
-                   src="../assets/images/linkedin-bug.png" alt="LinkedIn"
-                   width="96" height="89">
-            </p>
-            <p class="contact-details__value">
-              <a class="link" href="https://www.linkedin.com/in/lisette-v-2ba2059/">Lisette van Eenennaam</a>
-            </p>
-          </div>
+          <aside class="contact-details">
+            <h2 class="contact-details__title">Direct Contact</h2>
 
-          <div class="contact-details__item">
-            <p class="contact-details__label">Based in</p>
-            <p class="contact-details__value">Switzerland, working worldwide</p>
-          </div>
+            <div class="contact-details__item">
+              <p class="contact-details__label">Email</p>
+              <p class="contact-details__value">
+                <a class="link" href="mailto:OnenameConsulting@outlook.com">OnenameConsulting@outlook.com</a>
+              </p>
+            </div>
 
-          <div class="contact-details__item">
-            <p class="contact-details__label">Languages</p>
-            <p class="contact-details__value">Dutch, English, German and French fluently</p>
-          </div>
-        </aside>
+            <div class="contact-details__item">
+              <p class="contact-details__label">
+                <img class="social-bug" loading="lazy" decoding="async"
+                     src="../assets/images/linkedin-bug.png" alt="LinkedIn"
+                     width="96" height="89">
+              </p>
+              <p class="contact-details__value">
+                <a class="link" href="https://www.linkedin.com/in/lisette-v-2ba2059/">Lisette van Eenennaam</a>
+              </p>
+            </div>
 
-      </div>
-    </section>
+            <div class="contact-details__item">
+              <p class="contact-details__label">Based in</p>
+              <p class="contact-details__value">Switzerland, working worldwide</p>
+            </div>
 
-    <!-- Booking. No scheduler is connected yet: js/scheduler.js looks for a
-         booking address on the container below and, finding none, leaves the
-         fallback in place. Put the address in data-scheduler-url and the
-         booking page appears in a frame here instead, whichever provider it
-         belongs to. The providers it will embed are listed in that file. -->
-    <section class="section" id="book">
-      <div class="container">
-        <h2 class="section__title">Book a Conversation</h2>
-
-        <p class="lead">
-          Pick a time that suits you for a first conversation. Thirty minutes,
-          online, no cost or obligation.
-        </p>
-
-        <div class="scheduler" id="scheduler" data-scheduler-url="">
-          <div class="scheduler__fallback">
-            <p class="scheduler__note">
-              Online booking is being set up. In the meantime, write to
-              <a class="link" href="mailto:OnenameConsulting@outlook.com?subject=Conversation">OnenameConsulting@outlook.com</a>
-              with a couple of times that suit you and I will confirm one.
-            </p>
-            <a class="btn btn--solid" href="mailto:OnenameConsulting@outlook.com?subject=Conversation">Suggest a time by email</a>
-          </div>
+            <div class="contact-details__item">
+              <p class="contact-details__label">Languages</p>
+              <p class="contact-details__value">Dutch, English, German and French fluently</p>
+            </div>
+          </aside>
         </div>
+
       </div>
     </section>
 
@@ -304,5 +306,6 @@
   <script src="../js/main.js"></script>
   <script src="../js/contact-form.js"></script>
   <script src="../js/scheduler.js"></script>
+  <script src="../js/booking-picker.js"></script>
 </body>
 </html>

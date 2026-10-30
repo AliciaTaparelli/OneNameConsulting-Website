@@ -937,15 +937,149 @@ main {
    -------------------------------------------------------------------------- */
 
 .scheduler {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-xl);
   border: 1px solid var(--rule-hairline);
 }
 
 .scheduler__fallback {
   display: grid;
-  justify-items: start;
+  justify-items: stretch;
   gap: var(--space-lg);
-  padding: var(--space-2xl) var(--space-lg);
+  padding: var(--space-lg);
+}
+
+/* The stand-in picker. It books nothing — a day and a time compose the
+   email that asks for them — so it stays quiet: rules and type, no filled
+   cells, in keeping with the rest of the page. */
+.booking__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.booking__month {
+  font-family: var(--font-display);
+  font-size: var(--text-m);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+}
+
+.booking__step {
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid var(--rule-hairline);
+  background: none;
+  font-size: var(--text-s);
+  line-height: 1;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.booking__step:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+
+.booking__step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.booking__weekdays,
+.booking__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+
+.booking__weekdays {
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.booking__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  background: none;
+  font-size: var(--text-s);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-fast),
+    background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.booking__day:hover:not(.is-closed):not(.is-empty) {
+  border-color: var(--color-accent);
+}
+
+.booking__day.is-closed,
+.booking__day.is-empty {
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.booking__day.is-chosen {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.booking__slots {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.booking__slots-title {
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--rule-hairline);
+  font-size: var(--text-s);
+  color: var(--color-text);
+}
+
+.booking__slot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.booking__slot {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--rule-hairline);
+  background: none;
+  font-size: var(--text-s);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--transition-fast),
+    background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.booking__slot:hover {
+  border-color: var(--color-accent);
+}
+
+.booking__slot.is-chosen {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.booking__confirm {
+  justify-self: start;
+}
+
+/* .btn sets its own display, which would otherwise ignore the hidden
+   attribute while no time is chosen. */
+.booking__confirm[hidden] {
+  display: none;
 }
 
 .scheduler__note {
@@ -959,7 +1093,7 @@ main {
 .scheduler__frame {
   display: block;
   width: 100%;
-  height: 680px;
+  height: 640px;
   border: 0;
 }
 
@@ -1537,13 +1671,33 @@ main {
   gap: var(--space-3xl);
 }
 
+/* Form on one side, booking on the other: two ways to start, neither
+   subordinate to the other. The direct details sit under the booking,
+   which is the shorter of the two columns. */
+.contact-booking-column {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3xl);
+  min-width: 0;
+}
+
+.contact-booking__lead {
+  max-width: var(--measure);
+  margin-top: var(--space-md);
+  font-size: var(--text-s);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
 .contact-form-column,
 .form {
   min-width: 0;
 }
 
-/* A single section numbered 01 is a count of nothing. */
-.contact-form-column .section__title::before {
+/* A single section numbered 01 is a count of nothing, and the two headings
+   on this page are a pair rather than a sequence. */
+.contact-form-column .section__title::before,
+.contact-booking-column .section__title::before {
   content: none;
 }
 
@@ -2098,7 +2252,7 @@ main:has(> .cta-banner:last-child) + .footer {
   /* Contact ----------------------------------------------------------------- */
 
   .contact-grid {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
   }
 
