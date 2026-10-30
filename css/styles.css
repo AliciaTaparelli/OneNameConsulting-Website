@@ -693,6 +693,19 @@ main {
 /* Portrait slot. Holds its 4:5 shape whether or not an image is in it yet,
    so dropping the real headshot in later shifts nothing. Art-directed rather
    than framed: no radius, a hairline, and the image bleeds to the edges. */
+.about-header__figure {
+  margin: 0;
+}
+
+/* The portrait is not a photograph, and says so. */
+.about-header__credit {
+  margin-top: var(--space-sm);
+  font-size: var(--text-s);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
 .about-header__portrait {
   position: relative;
   display: flex;
@@ -1992,8 +2005,10 @@ main:has(> .cta-banner:last-child) + .footer {
     column-gap: var(--space-3xl);
   }
 
-  /* Portrait drops below the baseline of the type beside it. */
-  .about-header__portrait {
+  /* Portrait drops below the baseline of the type beside it. The offset sits
+     on the figure, not the frame: on the frame it pulled the credit line up
+     underneath the picture, which paints over it. */
+  .about-header__figure {
     margin-bottom: calc(var(--space-xl) * -1);
   }
 
