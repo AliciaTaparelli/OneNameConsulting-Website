@@ -8,16 +8,19 @@
    When a provider is connected, js/scheduler.js frames their booking page
    and hides this, so none of it has to be unpicked.
 
-   Weekdays only, two months ahead, with today and anything past it closed.
-   The hours are the placeholder ones: change WINDOW to match whatever is
-   actually offered.                                                      */
+   Weekdays only, from tomorrow to the last day of UNTIL_MONTH, with
+   weekends closed. The hours are the placeholder ones: change WINDOW to
+   match whatever is actually offered.
+
+   UNTIL_MONTH is a fixed end rather than a rolling window, so it needs
+   moving before it arrives or the calendar runs out.                     */
 
 (function () {
   "use strict";
 
   var MAILTO = "OnenameConsulting@outlook.com";
   var WINDOW = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
-  var MONTHS_AHEAD = 2;
+  var UNTIL_MONTH = [2027, 12];        // year, month — December 2027
 
   var root = document.getElementById("booking-picker");
 
@@ -34,7 +37,8 @@
 
   first.setDate(first.getDate() + 1);
 
-  var last = new Date(today.getFullYear(), today.getMonth() + MONTHS_AHEAD + 1, 0);
+  // The last day of the closing month.
+  var last = new Date(UNTIL_MONTH[0], UNTIL_MONTH[1], 0);
 
   // Open on the first month that actually has a day to offer: late in a
   // month the next free weekday is often in the one after it.
